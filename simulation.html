@@ -3,206 +3,551 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sharmaji · Simulateur de caisse</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&display=swap">
+<title>Sharmaji · Simulation client</title>
+<meta name="theme-color" content="#13081a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;700&family=Hind:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap">
 <style>
-:root{--bg:#cdd2d6;--bar:#e7e8ec;--ink:#1d2330;--mut:#6b7280;--free:#efefef;--org:#e8923a;--red:#d6283a;--blu:#3a82c4;--card:#fff;--line:#d5d8de;--sf:#f2a93b;--pl:#52205c}
-[data-theme=dark]{--bg:#1e2530;--bar:#2a3240;--ink:#eef0f4;--mut:#9aa3b2;--free:#3a4352;--card:#2a3240;--line:#3d4757}
+:root{--sf:#f2a93b;--pl:#52205c;--ink:#f6eaf4;--mut:#b9a3c4;--line:rgba(255,255,255,.16);--card:rgba(24,12,32,.86)}
 *{box-sizing:border-box}html,body{height:100%}
-body{margin:0;font:500 16px/1.4 system-ui,"Segoe UI",sans-serif;background:#0e0f12;color:var(--ink);overflow:hidden}
+body{margin:0;background:radial-gradient(ellipse at 40% 30%,#3a1846 0,#150b1c 75%);color:var(--ink);font:400 16px/1.45 Hind,system-ui,sans-serif;overflow:hidden}
 button{font:inherit;color:inherit}
-#app{display:flex;height:100dvh}
-#sb{width:60px;background:#0e0f12;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 0;z-index:3;flex:none}
-#sb button,#sb a{width:44px;height:44px;border:0;border-radius:12px;background:none;font-size:21px;cursor:pointer;display:grid;place-items:center;text-decoration:none;filter:grayscale(1) brightness(1.6);transition:background .2s,transform .15s}
-#sb button:hover,#sb a:hover{background:#23262d;transform:scale(1.1)}.sp{flex:1}
-#main{flex:1;display:flex;flex-direction:column;min-width:0;background:var(--bg);position:relative;overflow:hidden}
-#tabs{display:flex;background:var(--bar);overflow-x:auto;flex:none;z-index:1}
-#tabs button{flex:1 0 auto;min-width:96px;border:0;background:none;padding:12px 14px 9px;text-align:left;font-weight:700;font-size:18px;cursor:pointer;border-bottom:3px solid transparent;border-left:1px solid var(--line);transition:all .2s}
-#tabs small{display:block;color:var(--mut);font-weight:500;font-size:15px}
-#tabs button.on{color:var(--blu);border-bottom-color:var(--blu)}
-#mi{flex:none;z-index:1;margin:10px 12px 0;background:var(--card);border-left:4px solid var(--sf);border-radius:10px;padding:8px 12px;display:flex;gap:10px;align-items:center;font-size:14.5px;box-shadow:0 3px 12px rgba(0,0,0,.1)}
-#mi span{flex:1}.sc{color:var(--sf)}
-#floor{flex:1;position:relative;overflow:hidden;z-index:1}
-.bk{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(242,169,59,.35),transparent 70%);pointer-events:none;animation:dr 28s ease-in-out infinite alternate}
-@keyframes dr{to{transform:translate(60px,-40px) scale(1.25)}}
-.novfx .bk{display:none}
-.tb{position:absolute;transform:translate(-50%,-50%);width:clamp(52px,8.5vw,88px);aspect-ratio:1;border:0;background:var(--free);color:var(--ink);font:600 clamp(24px,3.6vw,38px) "Barlow Condensed",system-ui;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.18);transition:transform .15s,box-shadow .2s,background .3s}
-.tb.c{border-radius:50%}
-.tb:hover{transform:translate(-50%,-50%) scale(1.08);box-shadow:0 8px 18px rgba(0,0,0,.25)}
-.tb:active{transform:translate(-50%,-50%) scale(.94)}
-.tb.cook,.tb.ready,.tb.served{background:var(--org);color:#fff}.tb.bill{background:var(--red);color:#fff}
-.tb.ready::after,.tb.bill::after,.tb.tgt::after{content:"";position:absolute;inset:-5px;border:3px solid var(--org);border-radius:inherit;opacity:0;animation:pu 1.4s infinite}
-.tb.bill::after{border-color:var(--red)}.tb.tgt::after{border-color:var(--blu);animation-duration:1s}
-@keyframes pu{0%{opacity:.8;transform:scale(.9)}100%{opacity:0;transform:scale(1.3)}}
-.tb i{position:absolute;right:5px;top:2px;font:600 11px system-ui;font-style:normal;opacity:.9}
-.rip{position:absolute;border-radius:50%;border:2px solid var(--blu);pointer-events:none;transform:translate(-50%,-50%);animation:rp .6s forwards}
-@keyframes rp{from{width:10px;height:10px;opacity:.9}to{width:130px;height:130px;opacity:0}}
-.lst{padding:16px;overflow:auto;height:100%}
-.row{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:transform .15s}
-.row:hover{transform:translateX(4px)}.row>b{font:600 28px "Barlow Condensed";width:46px}.row .m{flex:1}
-.mut,small{color:var(--mut)}
-.b2{height:5px;background:var(--line);border-radius:9px;overflow:hidden;margin-top:5px}.b2 i{display:block;height:100%;background:var(--org);transition:width 1s linear}
-#sheet{position:fixed;inset:0;z-index:20;background:var(--bg);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .35s cubic-bezier(.2,.8,.2,1),visibility .35s;visibility:hidden}
-#sheet.on{transform:none;visibility:visible}
-.sh{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bar);flex-wrap:wrap}
-.sh h2{margin:0;font:600 32px "Barlow Condensed"}
-.stp{margin-left:auto;display:flex;align-items:center;gap:8px}
-.stp button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:18px}
-.al{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 14px;background:var(--bar);border-top:1px solid var(--line)}
-.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:4px 12px;font-size:14px;cursor:pointer;transition:all .15s}
-.chip.on{background:var(--red);border-color:var(--red);color:#fff}.chip.cat.on{background:var(--pl);border-color:var(--pl)}
-.sb2{flex:1;display:grid;grid-template-columns:1.4fr 1fr;min-height:0}
-.mn{padding:12px;overflow:auto}.cats{display:flex;gap:6px;margin-bottom:10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.it{background:var(--card);border:0;border-radius:12px;padding:12px;text-align:left;cursor:pointer;font-weight:600;line-height:1.2;border-bottom:3px solid var(--sf);transition:transform .12s,box-shadow .2s}
-.it:hover{box-shadow:0 6px 14px rgba(0,0,0,.15)}.it:active{transform:scale(.95)}.it small{display:block;margin-top:4px;font-weight:500}.it.bad{border-bottom-color:var(--red)}
-.tk{background:var(--card);border-left:1px solid var(--line);padding:12px;overflow:auto}
-.ln{padding:8px 6px;border-bottom:1px solid var(--line);border-radius:6px}.ln.w{background:color-mix(in srgb,var(--red) 14%,transparent)}
-.lr{display:flex;gap:8px;align-items:center}.lr span{margin-left:auto}
-.lr button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--bg);cursor:pointer}
-.nt{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}.nt .chip{font-size:12.5px;padding:2px 9px}.nt .chip.on{background:var(--pl);border-color:var(--pl)}
-.ft{display:flex;align-items:center;gap:12px;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bar)}
-.ft b{font:600 28px "Barlow Condensed";flex:1}
-.btn{border:0;border-radius:12px;padding:12px 20px;font-weight:700;cursor:pointer;background:var(--sf);color:#1d1026;transition:transform .15s,filter .2s;text-decoration:none;display:inline-block;text-align:center}
-.btn:hover{filter:brightness(1.08)}.btn:active{transform:scale(.96)}.btn:disabled{opacity:.45;cursor:default}
-.btn.g{background:var(--card);color:var(--ink);border:1px solid var(--line)}.btn.s{padding:6px 12px;font-size:14px}
-#set{position:fixed;inset:0;z-index:30;background:rgba(10,5,15,.5);display:none}#set.on{display:block}
-.pan{position:absolute;right:0;top:0;bottom:0;width:min(380px,100%);background:var(--bg);padding:20px;overflow:auto;animation:sl .25s;display:flex;flex-direction:column;gap:10px}
-@keyframes sl{from{transform:translateX(30px);opacity:0}}
-.pan h2{margin:0;font:600 32px "Barlow Condensed"}.pan h3{margin:10px 0 0}.pan ol{margin:0;padding-left:20px}
-.pan label{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--card);padding:10px 12px;border-radius:10px}
-.pan select{padding:6px;border-radius:8px;background:var(--bg);color:var(--ink);border:1px solid var(--line)}
-.x{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;border:0;background:var(--line);cursor:pointer}
-#splash{position:fixed;inset:0;z-index:60;background:radial-gradient(rgba(255,255,255,.08) 1.5px,transparent 1.6px) 0 0/18px 18px,linear-gradient(170deg,#34123f,#52205c);display:grid;place-items:center;padding:16px;transition:opacity .5s,visibility .5s;color:#fff}
-#splash.off{opacity:0;visibility:hidden}
-.card{max-width:460px;text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center}
-.card h1{font:600 clamp(54px,12vw,84px)/1 "Barlow Condensed";margin:0;letter-spacing:.04em}
-.card .nm{color:#f2c27a;letter-spacing:.1em}.card p{margin:0;color:#e8d9ee}.card .btn{width:100%}.card .btn.g{background:none;color:#fff;border-color:#fff}
-.lg{display:flex;gap:6px}.lg button{border:1px solid #fff;background:none;color:#fff;border-radius:99px;padding:3px 12px;cursor:pointer}
-#toast{position:fixed;left:50%;top:14px;transform:translate(-50%,-90px);z-index:70;background:#1d2330;color:#fff;padding:10px 18px;border-radius:99px;box-shadow:0 8px 24px rgba(0,0,0,.35);transition:transform .3s;max-width:92vw;text-align:center}
-#toast.on{transform:translate(-50%,0)}#toast.bad{background:var(--red)}
-#fx{position:fixed;inset:0;pointer-events:none;z-index:80}
-@media(max-width:760px){.sb2{grid-template-columns:1fr;grid-template-rows:1fr 1fr}#sb{width:48px}#sb button,#sb a{width:38px;height:38px}}
+#vp{position:fixed;inset:0;perspective:900px;perspective-origin:50% 50%;touch-action:none;cursor:grab;overflow:hidden}
+#vp:active{cursor:grabbing}
+#world{position:absolute;left:40%;top:50%;width:0;height:0;transform-style:preserve-3d;will-change:transform}
+.g{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d}
+.f{position:absolute;backface-visibility:hidden}
+.lb{display:flex;align-items:center;justify-content:center;text-align:center;font:700 18px "Barlow Condensed",system-ui;color:#2b1636;line-height:1}
+.sign{font:700 30px Cormorant,serif;color:#f2c27a;letter-spacing:.12em}
+.pop{transform-origin:0 0;animation:pop .55s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes pop{from{transform:scale3d(0,0,0)}}
+.ring{border:3px solid #e9b45a;border-radius:50%;animation:rp 2s ease-out infinite;box-shadow:0 0 28px rgba(242,169,59,.8),inset 0 0 18px rgba(242,169,59,.5)}
+@keyframes rp{from{scale:.7;opacity:.95}to{scale:1.25;opacity:0}}
+.top{position:fixed;left:0;right:0;top:0;z-index:5;display:flex;gap:10px;align-items:center;padding:12px 14px;pointer-events:none}
+.top>*{pointer-events:auto}
+.top a,.pill{color:#fff;text-decoration:none;background:rgba(20,10,28,.7);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-weight:600;font-size:14px;cursor:pointer}
+.top .sp{flex:1}
+.lang{display:flex;border:1px solid #fff;border-radius:99px;overflow:hidden}
+.lang button{border:0;background:none;padding:5px 11px;font-weight:600;font-size:13px;cursor:pointer;color:#fff}
+.lang button[aria-pressed=true]{background:#fff;color:#34123f}
+#tbl{position:fixed;left:40%;top:60px;transform:translateX(-50%);z-index:5;background:var(--sf);color:#1d1026;border-radius:99px;padding:6px 18px;font-weight:700;opacity:0;transition:opacity .4s;pointer-events:none}
+#tbl.on{opacity:1}
+.cam{position:fixed;left:14px;bottom:14px;z-index:5;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.cam .pill{padding:6px 12px}.cam .pill:disabled{opacity:.4;cursor:default}
+.hint{position:fixed;left:14px;bottom:56px;z-index:4;color:var(--mut);font-size:12.5px;pointer-events:none}
+.caisse{color:var(--mut);font-size:12.5px;text-decoration:underline;margin-left:6px}
+#pn{position:fixed;right:14px;top:14px;bottom:14px;width:min(400px,calc(100% - 28px));z-index:6;background:var(--card);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:20px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.ph{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(170deg,#34123f,#52205c)}
+.ph div{flex:1;line-height:1.2}.ph small{display:block;color:#ffe9bf;font-size:12.5px}
+.av{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:20px;flex:none}
+.ph button{border:0;background:rgba(255,255,255,.18);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px}
+#vs{display:none;padding:10px 14px;border-bottom:1px solid var(--line);background:rgba(0,0,0,.25);font-size:14px;gap:8px;flex-direction:column}
+#vs.on{display:flex}#vs label{display:flex;align-items:center;gap:8px;justify-content:space-between}
+#vs select{flex:1;min-width:0;max-width:240px;padding:6px;border-radius:8px;background:#2a1837;color:#fff;border:1px solid var(--line);font:inherit;font-size:13px}
+#vs input[type=range]{flex:1;max-width:240px;accent-color:var(--sf)}#vs small{color:var(--mut)}
+.ph button.on{background:var(--sf);color:#1d1026}
+#log{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.m{padding:9px 12px;border-radius:14px;max-width:88%;font-size:15px}
+.m.bot{background:rgba(255,255,255,.1);border-bottom-left-radius:4px;align-self:flex-start}
+.m.me{background:var(--sf);color:#1d1026;border-bottom-right-radius:4px;align-self:flex-end}
+.m.sys{align-self:center;background:rgba(31,122,77,.35);border:1px solid rgba(95,211,154,.5);font-size:14px;text-align:center;max-width:96%}
+.m a{color:var(--sf)}
+.dots i{display:inline-block;width:7px;height:7px;margin:0 2px;border-radius:50%;background:var(--mut);animation:bn 1s infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes bn{50%{transform:translateY(-4px);opacity:.4}}
+#qr{display:flex;flex-wrap:wrap;gap:6px;padding:4px 12px 8px}
+.chip{border:1px solid var(--line);background:rgba(255,255,255,.08);border-radius:99px;padding:5px 13px;font-size:14px;cursor:pointer;transition:background .15s}
+.chip:hover{background:var(--sf);color:#1d1026;border-color:var(--sf)}
+#bar{display:flex;gap:6px;padding:0 12px 8px}
+#bar button{flex:1;border:1px solid var(--line);background:none;border-radius:10px;padding:7px;font-size:14px;cursor:pointer}
+#bar button.on{background:rgba(255,255,255,.14)}
+#dc{max-height:0;overflow:auto;transition:max-height .3s;padding:0 12px}
+#dc.on{max-height:210px;padding:0 12px 8px}
+.ln{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.ln span{flex:1}.ln button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:none;cursor:pointer}
+.ln button:disabled{opacity:.35;cursor:default}
+.ln small,#dc>small{color:var(--mut)}
+.tot{display:flex;justify-content:space-between;padding:8px 0 2px;font-weight:600}
+#fm{display:flex;gap:6px;padding:10px 12px 12px;border-top:1px solid var(--line)}
+#in{flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.08);color:#fff;font:inherit}
+#in::placeholder{color:var(--mut)}
+#fm button{border:0;background:var(--sf);color:#1d1026;border-radius:10px;padding:0 16px;font-weight:700;cursor:pointer}
+#fm button:disabled,#in:disabled{opacity:.5}
+#kt{position:fixed;left:40%;top:70px;transform:translate(-50%,calc(-100% - 110px));z-index:9;background:#fff8e8;color:#2b1636;width:min(330px,calc(100% - 40px));border-radius:6px 6px 14px 14px;padding:14px 16px;box-shadow:0 18px 44px rgba(0,0,0,.5);transition:transform .6s cubic-bezier(.2,1.2,.4,1);border-top:6px solid var(--sf)}
+#kt.on{transform:translate(-50%,0)}
+#kt h3{margin:0 0 4px;font:700 22px Cormorant,serif}#kt ul{margin:6px 0 0;padding-left:18px}#kt .w{color:#b3261e;font-weight:600;margin-top:6px}
+#fin{position:fixed;inset:0;z-index:20;background:rgba(10,5,15,.6);display:none;place-items:center;padding:16px}
+#fin.on{display:grid}
+#fin .c{background:#fff8e8;color:#2b1636;border-radius:16px;padding:22px;width:min(420px,100%);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+#fin h2{margin:0 0 4px;font:700 30px Cormorant,serif}#fin ul{padding-left:18px;margin:8px 0}
+#fin .b{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn{border:0;border-radius:99px;padding:9px 18px;font-weight:700;cursor:pointer;background:var(--sf);color:#1d1026;text-decoration:none;display:inline-block}.btn.alt{background:#eadff0;color:#34123f}
+@media(max-width:860px){
+ #world{left:50%;top:27%}#tbl,#kt{left:50%}
+ #pn{left:8px;right:8px;top:auto;bottom:8px;width:auto;height:52vh;border-radius:18px}
+ .cam{bottom:calc(52vh + 16px)}.hint{display:none}
+ #dc.on{max-height:130px}
+ #qr{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px}.chip{flex:none}
+ #log{min-height:90px}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ===== Sharmaji luxe ===== */
+.ic{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.2em}
+.foil{background:linear-gradient(115deg,#a8671c 0%,#f7dc9c 22%,#e9b45a 40%,#fff1c9 52%,#c98a2c 70%,#f7dc9c 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+@keyframes shine{from{background-position:100% 0}to{background-position:0 0}}
+
+:root{--sf:#e9b45a;--line:rgba(233,180,90,.24);--line2:rgba(246,234,219,.09);--card:rgba(24,10,32,.88);--foil:linear-gradient(115deg,#a8671c 0%,#f7dc9c 22%,#e9b45a 40%,#fff1c9 52%,#c98a2c 70%,#f7dc9c 100%)}
+body{background:radial-gradient(ellipse 70% 60% at 40% 30%,#3a1846 0,#13081a 75%);font-family:Hind,system-ui,sans-serif}
+.top a,.pill{display:inline-flex;align-items:center;gap:8px;background:rgba(20,8,27,.62);border:1px solid rgba(233,180,90,.42);color:#f6eadb;font:600 13.5px Hind,system-ui,sans-serif;letter-spacing:.03em;padding:8px 15px;transition:border-color .2s,background .2s,color .2s}
+.top a:hover,.pill:hover:not(:disabled){border-color:#e9b45a;color:#f7dc9c;background:rgba(233,180,90,.1)}
+.lang{border-color:rgba(233,180,90,.55)}.lang button{letter-spacing:.08em;font-size:12.5px;padding:6px 12px}.lang button[aria-pressed=true]{background:var(--foil);color:#2a0f33}
+#tbl{background:var(--foil);color:#2a0f33;letter-spacing:.03em;box-shadow:0 10px 30px rgba(242,169,59,.3)}
+.caisse{color:#a993b4;text-decoration:none;border-bottom:1px solid rgba(233,180,90,.3);font-size:13px}.caisse:hover{color:#f2c27a}
+.hint{color:#a993b4}
+#pn{background:linear-gradient(180deg,rgba(34,16,43,.93),rgba(20,8,27,.95));border:1px solid var(--line);border-radius:24px;box-shadow:0 30px 70px rgba(0,0,0,.6)}
+.ph{background:linear-gradient(170deg,#3a1646,#52205c);border-bottom:1px solid var(--line);padding:14px 16px}
+.ph b{font:600 22px Cormorant,Georgia,serif}.ph small{color:#f2c27a}
+.av{width:42px;height:42px;font:600 22px Cormorant,Georgia,serif;color:#f2c27a;border:1px solid rgba(233,180,90,.6);background:rgba(233,180,90,.08)}
+.ph button{display:grid;place-items:center;background:none;border:1px solid rgba(255,255,255,.2);color:#fff;transition:border-color .2s,color .2s}
+.ph button:hover{border-color:#e9b45a;color:#f2c27a}.ph button.on{background:rgba(233,180,90,.16);color:#f7dc9c;border-color:#e9b45a}
+#vs{background:rgba(10,4,14,.35)}#vs select,#vurl{background:#1d0d26!important;border-color:var(--line)!important}
+#vs .chip{align-self:flex-start}
+.m{line-height:1.5}
+.m.bot{background:rgba(255,255,255,.05);border:1px solid var(--line2)}
+.m.bot b{color:#f7dc9c}.m .ic{color:#f08c8c;vertical-align:-.18em}
+.m.me{background:var(--foil);color:#2a0f33}
+.m.sys{background:linear-gradient(90deg,rgba(233,180,90,.08),rgba(233,180,90,.18),rgba(233,180,90,.08));border:1px solid rgba(233,180,90,.5);color:#f7dc9c;font:italic 600 17px Cormorant,Georgia,serif;letter-spacing:.01em;padding:10px 18px;border-radius:99px}
+.dots i{background:#e9b45a}
+.chip{border:1px solid rgba(233,180,90,.32);background:rgba(255,255,255,.03);color:#f6eadb;font-family:Hind,system-ui,sans-serif;transition:background .2s,color .2s,border-color .2s}
+.chip:hover{background:var(--foil);color:#2a0f33;border-color:transparent}
+#bar button{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-color:var(--line2);color:#e9dccd;font-family:Hind,system-ui,sans-serif}
+#bar button:hover{border-color:rgba(233,180,90,.5)}#bar button.on{background:rgba(233,180,90,.12);border-color:#e9b45a;color:#f7dc9c}
+.ln .ic{color:#f08c8c}
+.ln button{border-color:rgba(233,180,90,.35);color:#f6eadb}
+#in{background:rgba(255,255,255,.04);border-color:var(--line2)}
+#in:focus{outline:none;border-color:#e9b45a;box-shadow:0 0 0 3px rgba(233,180,90,.15)}
+#fm button{display:grid;place-items:center;background:var(--foil);color:#2a0f33;padding:0 16px}
+#kt{background:linear-gradient(180deg,#2a1334,#1b0b23);color:#f6eadb;border:1px solid rgba(233,180,90,.5);border-top:3px solid #e9b45a;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+#kt h3{color:#f7dc9c;font-size:24px}#kt .w{color:#f4a3a3;display:flex;align-items:center;gap:6px}#kt div[style]{color:#b9a6c4!important}
+#fin{background:rgba(8,3,12,.66);backdrop-filter:blur(4px)}
+#fin .c{background:linear-gradient(180deg,#2a1334,#170a1f);color:#f6eadb;border:1px solid rgba(233,180,90,.45);box-shadow:0 30px 80px rgba(0,0,0,.7);padding:28px}
+#fin h2{font-size:36px;background:var(--foil);-webkit-background-clip:text;background-clip:text;color:transparent}
+#fin small{color:#b9a6c4}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--foil);background-size:160% 100%;color:#2a0f33;font:600 14.5px Hind,system-ui,sans-serif;letter-spacing:.03em;padding:11px 20px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+.btn.alt{background:transparent;color:#f6eadb;box-shadow:inset 0 0 0 1px rgba(233,180,90,.5)}.btn.alt:hover{box-shadow:inset 0 0 0 1px #e9b45a;color:#f7dc9c}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #e9b45a;outline-offset:3px}
+
+/* ===== Téléphones ===== */
+button,a,.chip,select,input{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+
+.ph,#vs,#qr,#bar,#dc,#fm,.ph button,.ph .av{flex:none}.ph>div{min-width:0}#log{min-height:0}
+.top{padding-top:calc(12px + env(safe-area-inset-top));padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right))}
+#qr{scrollbar-width:none}#qr::-webkit-scrollbar{display:none}
+@media(pointer:coarse){.chip{min-height:40px;padding:8px 15px}.ph button{width:42px;height:42px}.lang button{min-height:40px}.top a{min-height:42px}.pill{min-height:42px}.ln button{width:38px;height:38px}#bar button{min-height:44px}#fm button{min-width:52px}#vs select,#vurl{font-size:16px!important;min-height:40px}#in{font-size:16px}}
+@media(max-width:860px) and (orientation:portrait),(max-width:600px){
+ #world{left:50%;top:25%}
+ #pn{left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));top:auto;bottom:calc(max(8px,env(safe-area-inset-bottom)) + var(--kb,0px));width:auto;height:min(58dvh,calc(100dvh - var(--kb,0px) - 84px));border-radius:22px}
+ .ph{padding:10px 12px;gap:10px}.ph .av,.av{width:38px;height:38px;font-size:20px}.ph b{font-size:20px}.ph small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #log{padding:10px 12px}
+ #qr{flex-wrap:nowrap;overflow-x:auto;padding:2px 12px 8px}.chip{flex:none}
+ #bar{padding:0 12px 8px}#dc.on{max-height:26dvh}
+ #fm{padding:8px 12px 10px}
+ .cam{top:calc(64px + env(safe-area-inset-top));bottom:auto;left:max(12px,env(safe-area-inset-left));flex-direction:column;align-items:flex-start}
+ .cam .pill{width:44px;height:44px;padding:0;justify-content:center}.cam .pill span{display:none}
+ .caisse,.hint{display:none}
+ #tbl{left:50%;top:calc(66px + env(safe-area-inset-top))}#kt{left:50%;top:calc(60px + env(safe-area-inset-top))}
+ .top a span{display:none}.top a{padding:8px 12px}
+}
+@media(orientation:landscape) and (max-height:520px){
+ #world{left:31%;top:54%}
+ #pn{left:auto;right:max(8px,env(safe-area-inset-right));top:calc(8px + env(safe-area-inset-top));bottom:calc(8px + var(--kb,0px));width:min(46vw,430px);height:auto;border-radius:18px}
+ .ph{padding:6px 10px}.ph small{display:none}.av{width:32px;height:32px;font-size:17px}.ph b{font-size:18px}.ph button{width:36px;height:36px}
+ #log{padding:8px 10px}.m{font-size:14px;padding:7px 10px}
+ #qr{flex-wrap:nowrap;overflow-x:auto;padding:2px 10px 6px}.chip{flex:none;min-height:34px;padding:5px 12px}
+ #bar{padding:0 10px 6px}#bar button{min-height:36px;padding:4px}#dc.on{max-height:40dvh}#fm{padding:6px 10px 8px}
+ .cam{left:max(12px,env(safe-area-inset-left));bottom:calc(10px + env(safe-area-inset-bottom));top:auto}
+ .cam .pill{width:40px;height:40px;padding:0;justify-content:center}.cam .pill span{display:none}
+ .caisse,.hint{display:none}.top a span{display:none}
+ #tbl,#kt{left:31%}#kt{top:8px;padding:10px 14px}
+ #fin .c{max-height:92dvh;overflow:auto;padding:18px}
+}
+@media(max-width:600px){#kt{padding:10px 14px;font-size:14px}#kt h3{font-size:20px}#kt ul{margin-top:4px}#fin .c{padding:22px 18px}#fin .b .btn{flex:1 1 auto;justify-content:center}}
 </style>
 </head>
 <body>
-<div id="app"><aside id="sb"></aside><section id="main"><nav id="tabs"></nav><div id="mi"></div><div id="floor"></div></section></div>
-<div id="sheet"></div><div id="set"></div><div id="splash"></div><div id="toast"></div><canvas id="fx"></canvas>
+<div id="vp"><div id="world"></div></div>
+<div class="top"><a href="index.html" id="bk"></a><span class="sp"></span><div class="lang"><button id="bfr" aria-pressed="true">FR</button><button id="ben" aria-pressed="false">EN</button></div></div>
+<div id="tbl"></div>
+<div class="cam"><button class="pill" id="c1"></button><button class="pill" id="c2"></button><button class="pill" id="c3" disabled></button><a class="caisse" href="caisse.html" id="cs"></a></div>
+<div class="hint" id="hn"></div>
+<aside id="pn">
+ <div class="ph"><span class="av">R</span><div><b>Raj</b><small id="role"></small></div><button id="vo" aria-label="Voix"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3.5L12 18V6L7.5 10H4Z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button><button id="vso" aria-label="Réglages voix"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h9M18 7h1M5 17h3M12 17h7"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></button><button id="rs" aria-label="Recommencer"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4"/></svg></button></div>
+ <div id="vs"><label><span id="vsl1"></span><select id="vsel"></select></label><label><span id="vsl2"></span><input type="range" id="vrate" min="0.8" max="1.25" step="0.05"></label><label><span id="vsl3"></span><input type="range" id="vpitch" min="0.8" max="1.2" step="0.05"></label><label><span id="vsl4"></span><input id="vurl" type="url" placeholder="https://…workers.dev" style="flex:1;min-width:0;max-width:240px;padding:6px;border-radius:8px;background:#2a1837;color:#fff;border:1px solid var(--line);font:inherit;font-size:13px"></label><small id="vst"></small><small id="vtip"></small><button class="chip" id="vtest" type="button"></button></div>
+ <div id="log" aria-live="polite"></div>
+ <div id="qr"></div>
+ <div id="bar"><button id="bm"></button><button id="bt"></button></div>
+ <div id="dc"></div>
+ <form id="fm"><input id="in" autocomplete="off"><button id="sd" type="submit" aria-label="Envoyer"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+</aside>
+<div id="kt"></div>
+<div id="fin"><div class="c" id="fc"></div></div>
 <script>
-const BOOK="https://www.sharmaji.fr",TEL="+33978805278";
-const ST={music:true,vol:.5,sfx:true,vfx:!matchMedia("(prefers-reduced-motion:reduce)").matches,dark:false,hints:true,lang:"fr",speed:20};
-try{Object.assign(ST,JSON.parse(localStorage.getItem("sjpos")||"{}"))}catch(e){}
-const $=i=>document.getElementById(i),tr=(a,b)=>ST.lang=="fr"?a:b,li=()=>ST.lang=="fr"?0:1,now=()=>Date.now();
-const eur=n=>n.toFixed(2).replace(".",",")+" €";
-const AL={dairy:["Lait","Dairy"],almond:["Amandes","Almonds"],nuts:["Fruits à coque","Tree nuts"],gluten:["Gluten","Gluten"],sesame:["Sésame","Sesame"],mollusc:["Mollusques","Molluscs"],fish:["Poisson","Fish"],mustard:["Moutarde","Mustard"],celery:["Céleri","Celery"]};
-const IT=[["Murgh Badami","e",17,"dairy,almond",""],["Three Lentils Texture","e",14,"gluten",""],["Saint-Jacques Gunpowder","e",19,"sesame","mollusc"],["Veg Seekh Kabab","e",14,"almond","celery"],["Shahi Keema Roti","e",15,"dairy","gluten"],["Xacuti Poulpe","e",18,"","mollusc,gluten"],["Dorade Kerala Roast","p",28,"dairy","fish,mustard"],["Palak Paneer Pasanda","p",24,"dairy",""],["Hyderabad Mighty Salin","p",25,"dairy","mustard,celery"],["Murgh Ghee Roast","p",27,"nuts,dairy",""],["Lamb Shahi Raan","p",34,"dairy",""],["Dum Biryani","p",26,"dairy",""],["Lassi mangue","b",6,"dairy",""],["Masala chai","b",4,"","dairy"],["Eau pétillante","b",4,"",""]].map(a=>({n:a[0],c:a[1],p:a[2],a:a[3]?a[3].split(","):[],i:a[4]?a[4].split(","):[]}));
-const RM={"Salle1":[[1,48,10,1],[10,13,18],[26,82,20],[27,64,28,1],[25,82,33],[28,59,38,1],[11,13,39],[24,82,46],[23,82,58],[12,13,60],[16,30,60],[20,52,69],[21,61,69],[22,70,69],[14,13,79],[15,30,79]],"Sous-sol":[[30,25,30],[31,50,30],[32,75,30],[33,25,65],[34,50,65],[35,75,65]],"Terrasse":[["T1",20,30,1],["T2",40,30,1],["T3",60,30,1],["T4",80,30,1],["T5",30,65,1],["T6",60,65,1]],"Bar":[["B1",20,50,1],["B2",35,50,1],["B3",50,50,1],["B4",65,50,1],["B5",80,50,1]],"Comptoir":[["C1",30,50],["C2",50,50],["C3",70,50]]};
-const T={};Object.entries(RM).forEach(([r,a])=>a.forEach(([l,x,y,c])=>T[l]={r,l:String(l),x,y,c:!!c,st:"free",ln:[],cov:2,al:[],at:0}));
-let view="Salle1",cur=null,cat="e",MS=null,score=0,DN=[];
-const tot=t=>t.ln.reduce((s,x)=>s+IT[x.i].p*x.q,0);
-const hit=(it,al)=>{const s=[...it.a,...it.i];return al.filter(x=>s.includes(x)||(x=="nuts"&&s.includes("almond")))};
-(function seed(){const S=(l,st,items,ago)=>{const t=T[l];t.st=st;t.ln=items.map(([i,q])=>({i,q,note:"",s:1}));t.at=now()-ago*1000};
-S(10,"bill",[[9,2],[11,1],[12,1]],1500);S(26,"bill",[[10,1],[7,1]],1200);S(21,"cook",[[0,1],[6,1]],10);S("B1","cook",[[3,1],[7,1]],5);DN=[{l:"15",t:62,n:3}]})();
-const save=()=>{try{localStorage.setItem("sjpos",JSON.stringify(ST))}catch(e){}};
-/* ---------- audio ---------- */
-let AC,MUS,SFX,drn=[],mus=0,mto;
-function audio(){if(!AC){AC=new(window.AudioContext||window.webkitAudioContext)();MUS=AC.createGain();SFX=AC.createGain();MUS.gain.value=ST.vol;SFX.gain.value=.5;MUS.connect(AC.destination);SFX.connect(AC.destination)}if(AC.state=="suspended")AC.resume()}
-function beep(f,t,d,ty,g){audio();const o=AC.createOscillator(),a=AC.createGain(),s=AC.currentTime+t;o.type=ty||"sine";o.frequency.value=f;a.gain.setValueAtTime(.0001,s);a.gain.linearRampToValueAtTime(g||.2,s+.01);a.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(a);a.connect(SFX);o.start(s);o.stop(s+d+.05)}
-function sfx(k){if(!ST.sfx||!AC)return;({tap:()=>beep(700,0,.06,"triangle",.12),add:()=>{beep(520,0,.08,"triangle",.15);beep(780,.07,.1,"triangle",.15)},send:()=>[523,659,784].forEach((f,i)=>beep(f,i*.09,.35,"sine",.18)),ready:()=>{beep(880,0,.2);beep(1175,.15,.35)},alert:()=>beep(180,0,.25,"sawtooth",.1),cash:()=>[1046,1318,1568,2093].forEach((f,i)=>beep(f,i*.07,.3,"sine",.14))})[k]()}
-function startMusic(){audio();if(mus)return;mus=1;const lp=AC.createBiquadFilter();lp.type="lowpass";lp.frequency.value=450;const dg=AC.createGain();dg.gain.value=.05;lp.connect(dg);dg.connect(MUS);
-[65.41,98,130.81].forEach(f=>{const o=AC.createOscillator();o.type="sawtooth";o.frequency.value=f;o.connect(lp);o.start();drn.push(o)});
-const dl=AC.createDelay(1),fb=AC.createGain();dl.delayTime.value=.42;fb.gain.value=.38;dl.connect(fb);fb.connect(dl);dl.connect(MUS);
-const sc=[0,1,4,5,7,8,11,12];let k=3;
-(function pl(){if(!mus)return;k=Math.max(0,Math.min(7,k+Math.floor(Math.random()*5)-2));const o=AC.createOscillator(),a=AC.createGain(),f=AC.createBiquadFilter(),t=AC.currentTime;o.type="triangle";o.frequency.value=261.63*2**(sc[k]/12);f.type="lowpass";f.frequency.value=1800;a.gain.setValueAtTime(.0001,t);a.gain.exponentialRampToValueAtTime(.16,t+.02);a.gain.exponentialRampToValueAtTime(.001,t+2.2);o.connect(f);f.connect(a);a.connect(MUS);a.connect(dl);o.start(t);o.stop(t+2.4);mto=setTimeout(pl,1300+Math.random()*2200)})()}
-function stopMusic(){mus=0;clearTimeout(mto);drn.forEach(o=>{try{o.stop()}catch(e){}});drn=[]}
-/* ---------- vfx ---------- */
-const cv=$("fx"),cx=cv.getContext("2d");let P=[],raf=0;
-const rs=()=>{cv.width=innerWidth;cv.height=innerHeight};addEventListener("resize",rs);rs();
-function burst(x,y,n){if(!ST.vfx)return;const C=["#f2a93b","#d6286a","#52205c","#1b998b","#fff"];for(let i=0;i<n;i++){const a=Math.random()*6.28,s=3+Math.random()*7;P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-4,r:3+Math.random()*4,c:C[i%5],l:1,rt:Math.random()*6})}if(!raf)raf=requestAnimationFrame(loop)}
-function loop(){cx.clearRect(0,0,cv.width,cv.height);P=P.filter(p=>p.l>0);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.25;p.vx*=.98;p.l-=.012;p.rt+=.2;cx.globalAlpha=Math.max(p.l,0);cx.fillStyle=p.c;cx.save();cx.translate(p.x,p.y);cx.rotate(p.rt);cx.beginPath();cx.ellipse(0,0,p.r*1.6,p.r*.8,0,0,6.28);cx.fill();cx.restore()});raf=P.length?requestAnimationFrame(loop):0;if(!raf)cx.clearRect(0,0,cv.width,cv.height)}
-const pop=(e,n)=>{const r=e&&e.target&&e.target.getBoundingClientRect?e.target.getBoundingClientRect():{left:innerWidth/2,top:innerHeight/2,width:0,height:0};burst(r.left+r.width/2,r.top+r.height/2,n)};
-let tt;function toast(m,bad){const e=$("toast");e.textContent=m;e.className="on"+(bad?" bad":"");clearTimeout(tt);tt=setTimeout(()=>e.className="",2800)}
-/* ---------- floor ---------- */
-const STL={cook:["En cuisine","Cooking"],ready:["Prêt à servir","Ready to serve"],served:["Servi","Served"],bill:["Addition","Bill"]};
-function render(){
- const rooms=Object.keys(RM),open=Object.values(T).filter(t=>t.st!="free");
- $("tabs").innerHTML=rooms.map(r=>`<button data-v="${r}" class="${view==r?"on":""}">${r}<small>${open.filter(t=>t.r==r).length}</small></button>`).join("")+
- `<button data-v="cours" class="${view=="cours"?"on":""}">${tr("En cours","Open")}<small>${open.length}</small></button><button data-v="done" class="${view=="done"?"on":""}">${tr("Terminées","Done")}<small>${DN.length} / ${DN.length+open.length}</small></button>`;
- const f=$("floor");
- if(RM[view])f.innerHTML=Object.values(T).filter(t=>t.r==view).map(t=>`<button class="tb ${t.c?"c ":""}${t.st}${MS&&MS.l==t.l?" tgt":""}" data-t="${t.l}" style="left:${t.x}%;top:${t.y}%">${t.l}${t.st!="free"?`<i data-ts="${t.at}"></i>`:""}</button>`).join("");
- else if(view=="cours")f.innerHTML='<div class="lst">'+(open.map(t=>`<div class="row" data-t="${t.l}"><b>${t.l}</b><div class="m">${STL[t.st][li()]} · ${t.r}<br><small>${t.cov} ${tr("couverts","covers")} · ${eur(tot(t))} · <span data-ts="${t.at}" data-s="1"></span></small>${t.st=="cook"?`<div class="b2"><i data-pg="${t.at}"></i></div>`:""}</div></div>`).join("")||`<p class="mut">${tr("Aucune commande en cours.","No open orders.")}</p>`)+"</div>";
- else f.innerHTML='<div class="lst">'+DN.slice().reverse().map(d=>`<div class="row"><b>${d.l}</b><div class="m">${eur(d.t)}<br><small>${d.n} ${tr("articles","items")}</small></div></div>`).join("")+"</div>";
- const m=$("mi");m.hidden=!RM[view];
- m.innerHTML=(MS?`🎯 <span><b>Mission</b> · Table ${MS.l} · ${MS.cov} ${tr("couverts","covers")} · ${tr("allergie","allergy")}: ${AL[MS.al[0]][li()]}</span>`:`<span>${tr("Entraînez-vous avec une mission aléatoire.","Practice with a random mission.")}</span>`)+`<b class="sc">★ ${score}</b><button class="btn s" data-a="mission">${MS?tr("Changer","Change"):tr("Nouvelle mission","New mission")}</button>`;
- $("sb").innerHTML=`<button data-a="floor" aria-label="Plan">🍽</button><a href="${BOOK}" target="_blank" rel="noopener" aria-label="${tr("Réserver","Book")}" title="${tr("Réserver chez Sharmaji","Book at Sharmaji")}">📅</a><button data-a="mission" aria-label="Mission">🎯</button><div class="sp"></div><button data-a="music" aria-label="Music">${mus?"🔊":"🔈"}</button><button data-a="set" aria-label="Settings">⚙️</button><button data-a="set" aria-label="Help">❔</button><button data-a="theme" aria-label="Theme">🌙</button>`;
- tick()}
-function tick(){const n=now();document.querySelectorAll("[data-ts]").forEach(e=>{const s=Math.floor((n-+e.dataset.ts)/1000);e.textContent=e.dataset.s?String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0"):Math.floor(s/60)+"′"});
- document.querySelectorAll("[data-pg]").forEach(e=>e.style.width=Math.min(100,(n-+e.dataset.pg)/(ST.speed*10))+"%")}
-setInterval(()=>{let ch=0;Object.values(T).forEach(t=>{if(t.st=="cook"&&now()-t.at>=ST.speed*1000){t.st="ready";ch=1;sfx("ready");toast("Table "+t.l+tr(" : prêt à servir"," : ready to serve"));const el=document.querySelector(`[data-t="${t.l}"]`);if(el){const r=el.getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2,24)}}});if(ch){render();if(cur)sheet()}tick()},1000);
-/* ---------- order sheet ---------- */
-const NT=[["Moins épicé","Milder"],["Sans lait","No dairy"],["Sans noix","No nuts"]];
-function sheet(){const t=T[cur],un=t.ln.some(x=>!x.s),sh=$("sheet"),sc=[...sh.querySelectorAll(".mn,.tk")].map(e=>e.scrollTop);
- const cats=[["e",tr("Entrées","Starters")],["p",tr("Plats","Mains")],["b",tr("Boissons","Drinks")]];
- let lb,dis=0;
- if(un)lb=tr("Envoyer en cuisine","Send to kitchen");else if(t.st=="cook"){lb=tr("En cuisine…","Cooking…");dis=1}else if(t.st=="ready")lb=tr("Servir","Serve");else if(t.st=="served")lb=tr("Demander l’addition","Request bill");else if(t.st=="bill")lb=tr("Encaisser","Pay")+" "+eur(tot(t));else{lb=tr("Ajoutez des plats","Add dishes");dis=1}
- sh.innerHTML=`<div class="sh"><button class="btn g" data-a="back">‹ ${tr("Retour","Back")}</button><h2>Table ${t.l}</h2><span class="mut">${t.r}${t.st!="free"?" · "+STL[t.st][li()]:""}</span><div class="stp">${tr("Couverts","Covers")} <button data-a="cv-">−</button><b>${t.cov}</b><button data-a="cv+">+</button></div></div>
- <div class="al"><small>${tr("Allergie du client :","Guest allergy:")}</small>${Object.keys(AL).map(k=>`<button class="chip${t.al.includes(k)?" on":""}" data-a="al" data-k="${k}">${AL[k][li()]}</button>`).join("")}</div>
- <div class="sb2"><div class="mn"><div class="cats">${cats.map(c=>`<button class="chip cat${cat==c[0]?" on":""}" data-a="cat" data-k="${c[0]}">${c[1]}</button>`).join("")}</div><div class="grid">${IT.map((x,i)=>{if(x.c!=cat)return"";const h=hit(x,t.al);return`<button class="it${h.length?" bad":""}" data-a="add" data-i="${i}">${x.n}<small>${eur(x.p)}${h.length&&ST.hints?" · ⚠ "+h.map(a=>AL[a][li()]).join(", "):""}</small></button>`}).join("")}</div></div>
- <div class="tk">${t.ln.map((l,j)=>{const w=hit(IT[l.i],t.al).length;return`<div class="ln${w?" w":""}"><div class="lr"><b>${l.q}×</b> ${IT[l.i].n}${l.s?" ✓":""}${w?" ⚠":""}<span>${eur(IT[l.i].p*l.q)}</span>${l.s?"":`<button data-a="dec" data-i="${j}">−</button><button data-a="inc" data-i="${j}">+</button>`}</div>${l.s?(l.note?`<small>${l.note}</small>`:""):`<div class="nt">${NT.map((n,k)=>`<button class="chip${l.note==n[li()]?" on":""}" data-a="note" data-i="${j}" data-n="${k}">${n[li()]}</button>`).join("")}</div>`}</div>`}).join("")||`<p class="mut">${tr("Touchez un plat pour l’ajouter.","Tap a dish to add it.")}</p>`}</div></div>
- <div class="ft"><b>${eur(tot(t))}</b><button class="btn" data-a="prim"${dis?" disabled":""}>${lb}</button></div>`;
- sh.querySelectorAll(".mn,.tk").forEach((e,i)=>e.scrollTop=sc[i]||0)}
-function judge(t){const items=t.ln.filter(x=>!x.s),bad=items.filter(x=>hit(IT[x.i],MS.al).length).map(x=>IT[x.i].n),dishes=items.filter(x=>IT[x.i].c!="b").reduce((s,x)=>s+x.q,0);
- const msg=bad.length?tr("⚠ Allergène dans : ","⚠ Allergen in: ")+bad.join(", "):!t.al.includes(MS.al[0])?tr("Pensez à noter l’allergie du client.","Remember to note the guest’s allergy."):t.cov!=MS.cov?tr(`Couverts : ${t.cov} au lieu de ${MS.cov}.`,`Covers: ${t.cov} instead of ${MS.cov}.`):dishes<MS.cov?tr("Il manque des plats pour tous les convives.","Not enough dishes for every guest."):"";
- if(msg){toast(msg,1);sfx("alert");score=Math.max(0,score-20)}else{score+=100;toast(tr("Mission réussie ! +100","Mission complete! +100"));burst(innerWidth/2,innerHeight/2,160)}MS=null}
-function act(d,e){const t=cur&&T[cur];switch(d.a){
- case"back":closeSheet();return;
- case"cat":cat=d.k;break;
- case"add":{const i=+d.i;const l=t.ln.find(x=>!x.s&&x.i==i&&!x.note);if(l)l.q++;else t.ln.push({i,q:1,note:"",s:0});const h=hit(IT[i],t.al);if(h.length){toast("⚠ "+IT[i].n+" · "+h.map(a=>AL[a][li()]).join(", "),1);sfx("alert")}else sfx("add");break}
- case"inc":t.ln[+d.i].q++;sfx("tap");break;
- case"dec":{const l=t.ln[+d.i];if(--l.q<=0)t.ln.splice(+d.i,1);sfx("tap");break}
- case"note":{const l=t.ln[+d.i],n=NT[+d.n][li()];l.note=l.note==n?"":n;break}
- case"cv+":t.cov=Math.min(12,t.cov+1);break;case"cv-":t.cov=Math.max(1,t.cov-1);break;
- case"al":t.al=t.al.includes(d.k)?t.al.filter(x=>x!=d.k):[...t.al,d.k];sfx("tap");break;
- case"prim":{
-  if(t.ln.some(x=>!x.s)){if(MS&&MS.l==t.l)judge(t);t.ln.forEach(x=>x.s=1);t.st="cook";t.at=now();sfx("send");pop(e,40);toast(tr("Commande envoyée en cuisine","Order sent to kitchen"))}
-  else if(t.st=="ready"){t.st="served";sfx("add")}
-  else if(t.st=="served"){t.st="bill";sfx("alert")}
-  else if(t.st=="bill"){DN.push({l:t.l,t:tot(t),n:t.ln.reduce((s,x)=>s+x.q,0)});sfx("cash");pop(e,120);toast(tr("Encaissé ","Paid ")+eur(tot(t)));Object.assign(t,{st:"free",ln:[],cov:2,al:[],at:0});closeSheet();return}
-  render();break}
- case"mission":{const f=Object.values(T).filter(x=>x.st=="free"&&x.r!="Bar"&&x.r!="Comptoir"),x=f[Math.floor(Math.random()*f.length)],a=["sesame","dairy","almond","gluten","mollusc"];MS={l:x.l,cov:2+Math.floor(Math.random()*3),al:[a[Math.floor(Math.random()*a.length)]]};view=x.r;sfx("add");render();return}
- case"floor":view="Salle1";render();return;
- case"music":ST.music=!mus;ST.music?startMusic():stopMusic();save();render();return;
- case"theme":ST.dark=!ST.dark;theme();save();return;
- case"set":setHTML();$("set").classList.add("on");return;
- case"closeset":$("set").classList.remove("on");return;
- case"lang":ST.lang=d.k;save();lang();return;
- case"reset":location.reload();return;
- case"start":audio();if(ST.music)startMusic();sfx("add");$("splash").classList.add("off");render();return;}
- sheet();render()}
-function openSheet(l){cur=l;cat="e";sheet();$("sheet").classList.add("on");sfx("tap")}
-function closeSheet(){cur=null;$("sheet").classList.remove("on");render()}
-function setHTML(){const sw=(k,l)=>`<label>${l}<input type="checkbox" data-s="${k}"${ST[k]?" checked":""}></label>`;
- $("set").innerHTML=`<div class="pan"><button class="x" data-a="closeset">✕</button><h2>${tr("Réglages","Settings")}</h2>${sw("music",tr("Musique d’ambiance","Background music"))}<label>${tr("Volume","Volume")}<input type="range" min="0" max="1" step=".05" value="${ST.vol}" data-s="vol"></label>${sw("sfx",tr("Effets sonores","Sound effects"))}${sw("vfx",tr("Effets visuels","Visual effects"))}${sw("dark",tr("Thème sombre","Dark theme"))}${sw("hints",tr("Alertes allergènes sur le menu","Allergen hints on menu"))}
- <label>${tr("Langue","Language")}<select data-s="lang"><option value="fr"${ST.lang=="fr"?" selected":""}>Français</option><option value="en"${ST.lang=="en"?" selected":""}>English</option></select></label>
- <label>${tr("Vitesse de la cuisine","Kitchen speed")}<select data-s="speed">${[[40,"Lente","Slow"],[20,"Normale","Normal"],[8,"Rapide","Fast"]].map(o=>`<option value="${o[0]}"${ST.speed==o[0]?" selected":""}>${tr(o[1],o[2])}</option>`).join("")}</select></label>
- <h3>${tr("Aide","Help")}</h3><ol><li>${tr("Touchez une table pour ouvrir sa commande.","Tap a table to open its order.")}</li><li>${tr("Notez l’allergie du client, puis touchez les plats.","Note the guest’s allergy, then tap dishes.")}</li><li>${tr("Envoyez en cuisine, servez, demandez l’addition, encaissez.","Send to kitchen, serve, request the bill, pay.")}</li><li>${tr("Orange : en service. Rouge : addition demandée.","Orange: in service. Red: bill requested.")}</li></ol>
- <a class="btn" href="${BOOK}" target="_blank" rel="noopener">${tr("Réserver chez Sharmaji ↗","Book at Sharmaji ↗")}</a><a class="btn g" href="tel:${TEL}">📞 ${tr("Appeler le restaurant","Call the restaurant")}</a><button class="btn g" data-a="reset">${tr("Réinitialiser la simulation","Reset simulation")}</button>
- <p class="mut">${tr("Simulation d’entraînement : prix et tables fictifs.","Training simulation: prices and tables are fictional.")}</p></div>`}
-function theme(){document.documentElement.dataset.theme=ST.dark?"dark":"";document.body.classList.toggle("novfx",!ST.vfx)}
-function splash(){$("splash").innerHTML=`<div class="card"><div class="nm">नमस्ते</div><h1>Sharmaji</h1><p>${tr("Simulateur de prise de commande","Order-taking simulator")}</p><p>${tr("Entraînez-vous : plan de salle, commande, client allergique, encaissement. Prix fictifs.","Practice: floor plan, order, allergic guest, payment. Fictional prices.")}</p><button class="btn" data-a="start">${tr("Commencer","Start")}</button><a class="btn g" href="${BOOK}" target="_blank" rel="noopener">${tr("Réserver une table ↗","Book a table ↗")}</a><div class="lg"><button data-a="lang" data-k="fr">FR</button><button data-a="lang" data-k="en">EN</button></div></div>`}
-function lang(){document.documentElement.lang=ST.lang;splash();render();if(cur)sheet();if($("set").classList.contains("on"))setHTML()}
-document.addEventListener("click",e=>{const b=e.target.closest("[data-v],[data-t],[data-a]");if(!b)return;const d=b.dataset;
- if(d.v){view=d.v;sfx("tap");render();return}
- if(d.t){if(ST.vfx&&RM[view]){const f=$("floor").getBoundingClientRect(),r=document.createElement("div");r.className="rip";r.style.left=e.clientX-f.left+"px";r.style.top=e.clientY-f.top+"px";$("floor").appendChild(r);setTimeout(()=>r.remove(),650)}openSheet(d.t);return}
- act(d,e)});
-function sset(e){const k=e.target.dataset.s;if(!k)return;const v=e.target.type=="checkbox"?e.target.checked:e.target.value;ST[k]=["vol"].includes(k)?+v:k=="speed"?+v:v;
- if(k=="music")ST.music?startMusic():stopMusic();if(k=="vol"&&MUS)MUS.gain.value=ST.vol;if(k=="dark"||k=="vfx")theme();if(k=="lang")lang();if(k=="music")render();save()}
-document.addEventListener("input",sset);document.addEventListener("change",sset);
-document.addEventListener("keydown",e=>{if(e.key=="Escape"){if($("set").classList.contains("on"))$("set").classList.remove("on");else if(cur)closeSheet()}});
-$("set").addEventListener("click",e=>{if(e.target.id=="set")$("set").classList.remove("on")});
-for(let i=0;i<7;i++){const b=document.createElement("div");b.className="bk";const s=140+Math.random()*220;b.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*90}%;top:${Math.random()*80}%;animation-duration:${22+Math.random()*20}s;animation-delay:-${Math.random()*20}s`;$("main").appendChild(b)}
-theme();splash();render();
+const IC=n=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS_[n]||""}</svg>`,ICONS_={"cal": "<rect x=\"3.5\" y=\"5\" width=\"17\" height=\"15\" rx=\"2\"/><path d=\"M3.5 10h17M8 3v4M16 3v4\"/>", "cloche": "<path d=\"M4 17h16M6 17a6 6 0 0 1 12 0M12 9V7.5M10.5 7.5h3M3 20h18\"/>", "chat": "<path d=\"M20 12a7.5 7.5 0 0 1-11.2 6.5L4 20l1.5-4.3A7.5 7.5 0 1 1 20 12Z\"/>", "help": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M9.6 9.4a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.1-2.4 3.7M12 17h.01\"/>", "x": "<path d=\"M6 6l12 12M18 6 6 18\"/>", "reset": "<path d=\"M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4\"/>", "right": "<path d=\"M5 12h14M13 6l6 6-6 6\"/>", "left": "<path d=\"M19 12H5M11 6l-6 6 6 6\"/>", "ext": "<path d=\"M14 5h5v5M19 5l-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4\"/>", "vol": "<path d=\"M4 10v4h3.5L12 18V6L7.5 10H4Z\"/><path d=\"M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11\"/>", "mute": "<path d=\"M4 10v4h3.5L12 18V6L7.5 10H4Z\"/><path d=\"M16 9.5l5 5M21 9.5l-5 5\"/>", "sliders": "<path d=\"M5 7h9M18 7h1M5 17h3M12 17h7\"/><circle cx=\"16\" cy=\"7\" r=\"2\"/><circle cx=\"10\" cy=\"17\" r=\"2\"/>", "plate": "<circle cx=\"12\" cy=\"12\" r=\"7.5\"/><circle cx=\"12\" cy=\"12\" r=\"3.5\"/>", "target": "<circle cx=\"12\" cy=\"12\" r=\"8\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/><circle cx=\"12\" cy=\"12\" r=\".8\"/>", "gear": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8\"/>", "moon": "<path d=\"M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5Z\"/>", "phone": "<path d=\"M5 4h3.5l1.5 4-2 1.3a10 10 0 0 0 6.7 6.7L16 14l4 1.5V19a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z\"/>", "room": "<rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"1.5\"/><path d=\"M4 12h16M12 4v16\"/>", "seat": "<path d=\"M7 4v9h10M7 13v7M17 13v7M7 9h10\"/>", "list": "<path d=\"M5 7h14M5 12h14M5 17h9\"/>", "receipt": "<path d=\"M6 3h12v18l-3-2-3 2-3-2-3 2V3Z\"/><path d=\"M9 8h6M9 12h6\"/>", "warn": "<path d=\"M12 4 21 20H3L12 4Z\"/><path d=\"M12 10v4M12 17h.01\"/>", "check": "<path d=\"M5 12.5l4.5 4.5L19 7\"/>", "play": "<path d=\"M8 5.5v13l10.5-6.5L8 5.5Z\"/>", "rotate": "<path d=\"M20 12a8 8 0 1 1-2.3-5.6M20 4v4.5h-4.5\"/>", "cube": "<path d=\"M12 3 20 7.5v9L12 21 4 16.5v-9L12 3Z\"/><path d=\"M4 7.5 12 12l8-4.5M12 12v9\"/>"};
+
+/* ================= DONNÉES ================= */
+const AL={dairy:["Produits laitiers","Dairy"],almond:["Amandes","Almonds"],nuts:["Fruits à coque","Tree nuts"],gluten:["Gluten","Gluten"],sesame:["Sésame","Sesame"],mollusc:["Mollusques","Molluscs"],fish:["Poisson","Fish"],mustard:["Moutarde","Mustard"],celery:["Céleri","Celery"]};
+const AK={dairy:["lait","dairy","lactose","fromage","milk","laitier","creme","cream"],almond:["amande","almond"],nuts:["noix","nut","cajou","cashew","fruits a coque"],gluten:["gluten","ble","wheat","coeliaque","celiac"],sesame:["sesame"],mollusc:["mollusque","mollusc","shellfish","fruits de mer"],fish:["poisson","fish"],mustard:["moutarde","mustard"],celery:["celeri","celery"]};
+const M=[
+{n:"Murgh Badami",r:"Hyderabad",p:17,v:0,al:["dairy","almond"],i:[],k:["badami"],fr:"Poulet tendre mariné au yaourt, sauce douce aux amandes et au safran.",en:"Tender yogurt-marinated chicken in a mild almond and saffron sauce."},
+{n:"Three Lentils Texture",r:"Uttar Pradesh",p:14,v:2,al:["gluten"],i:[],k:["lentil","lentille"],fr:"Trois lentilles en purée, crackers au cumin, chutney d’herbes et tamarin.",en:"Three lentil purées, cumin crackers, herb chutney and tamarind."},
+{n:"Saint-Jacques Gunpowder",r:"Kerala & Tamil Nadu",p:19,v:0,al:["sesame"],i:["mollusc"],k:["jacques","gunpowder","scallop","coquille"],fr:"Saint-Jacques snackées aux épices, chutney et sauce ananas-coco.",en:"Seared scallops in a spice crust, with pineapple chutney and coconut sauce."},
+{n:"Veg Seekh Kabab",r:"Uttar Pradesh & Lucknow",p:14,v:1,al:["almond"],i:["celery"],k:["seekh","kabab","kebab"],fr:"Brochette de légumes et fruits secs aux épices douces, chutney menthe.",en:"Vegetable and dried fruit kabab with warm spices and mint chutney."},
+{n:"Shahi Keema Roti",r:"Uttar Pradesh & Delhi",p:15,v:0,al:["dairy"],i:["gluten"],k:["keema","roti"],fr:"Paratha farci de bœuf épicé, raïta au concombre.",en:"Paratha bread stuffed with spiced beef, cucumber raita."},
+{n:"Xacuti Poulpe",r:"Goa",p:18,v:0,al:[],i:["mollusc","gluten"],k:["xacuti","poulpe","octopus"],fr:"Poulpe grillé, semoule et sauce coco-piment de Goa.",en:"Grilled octopus, semolina and Goan coconut-chili sauce."},
+{n:"Dorade Kerala Roast",r:"Kerala",p:28,v:0,al:["dairy"],i:["fish","mustard"],k:["dorade","bream"],fr:"Dorade snackée, riz à la betterave, curry de poisson au lait de coco.",en:"Seared sea bream, beetroot rice, coconut fish curry."},
+{n:"Palak Paneer Pasanda",r:"Uttar Pradesh & Delhi",p:24,v:1,al:["dairy"],i:[],k:["palak","pasanda","paneer","epinard","spinach"],fr:"Fromage paneer grillé à l’abricot sur crème d’épinards.",en:"Grilled paneer with apricot on creamy spinach."},
+{n:"Hyderabad Mighty Salin",r:"Hyderabad",p:25,v:1,al:["dairy"],i:["mustard","celery"],k:["salin","mighty","poivron"],fr:"Poivron rouge farci de légumes, sauce yaourt aux épices douces.",en:"Red pepper stuffed with vegetables, gently spiced yogurt sauce."},
+{n:"Murgh Ghee Roast",r:"Karnataka (Mangalore)",p:27,v:0,al:["nuts","dairy"],i:[],k:["ghee"],fr:"Poulet laqué au beurre clarifié, aux épices et à la noix de cajou.",en:"Chicken glazed in spiced clarified butter and cashew."},
+{n:"Lamb Shahi Raan",r:"Uttar Pradesh, Lucknow & Delhi",p:34,v:0,al:["dairy"],i:[],k:["raan","lamb","agneau"],fr:"Épaule d’agneau cuite 8 heures, marinée au yaourt et à la cardamome.",en:"Lamb shoulder cooked 8 hours, marinated in yogurt and cardamom."},
+{n:"Dum Biryani",r:"Hyderabad – Andhra Pradesh",p:26,v:0,al:["dairy"],i:[],k:["biryani","biriyani"],fr:"Riz safrané cuit à l’étouffée, épices entières et menthe.",en:"Saffron rice slow-sealed with whole spices and mint."}];
+/* Plan importé (Salle1) : [n°, x%, y%, ronde, état] — 10 et 26 rouges, 21 orange sur votre photo */
+const PLAN=[[1,48,10,1],[10,13,18,0,"r"],[26,82,20,0,"r"],[27,64,28,1],[25,82,33],[28,59,38,1],[11,13,39],[24,82,46],[23,82,58],[12,13,60],[16,30,60],[20,52,69],[21,61,69,0,"o"],[22,70,69],[14,13,79],[15,30,79]];
+const TB=PLAN.map(a=>({n:a[0],x:a[1]*8,z:a[2]*6,c:!!a[3],occ:a[4]||null,cap:a[3]?2:4}));
+/* ================= ÉTAT / LANGUE ================= */
+/* Voix réaliste : collez ici l’adresse de votre relais (voir voix-worker.js), ou dans le panneau « Voix » */
+const VOICE_SERVER="";
+const ST={lang:"fr",voice:true,rate:1,pitch:1,vname:{fr:"",en:""},vurl:""};try{Object.assign(ST,JSON.parse(localStorage.getItem("sj-voice")||"{}"))}catch(e){}
+const saveV=()=>{try{localStorage.setItem("sj-voice",JSON.stringify({voice:ST.voice,rate:ST.rate,pitch:ST.pitch,vname:ST.vname,vurl:ST.vurl}))}catch(e){}};
+const $=i=>document.getElementById(i),L=(a,b)=>ST.lang=="fr"?a:b,LI=()=>ST.lang=="fr"?0:1,eur=n=>n.toFixed(2).replace(".",",")+" €";
+const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const nm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’'\-,.!;:]/g," ").replace(/\s+/g," ");
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+let order=[],covers=null,uAl=[],pend=null,phase="order",myTable=null,drink=null,busy=false,wantConfirm=false,drawer=null;
+const total=()=>order.reduce((s,o)=>s+M[o.id].p*o.q,0),count=()=>order.reduce((s,o)=>s+o.q,0);
+/* ================= MOTEUR 3D (CSS 3D, aucune dépendance) ================= */
+const W=$("world");
+const mix=(h,f)=>{const n=parseInt(h.slice(1),16),c=v=>Math.min(255,v*f|0);return `rgb(${c(n>>16&255)},${c(n>>8&255)},${c(n&255)})`};
+function el(par,css,cls){const e=document.createElement("div");if(cls)e.className=cls;e.style.cssText=css||"";par.appendChild(e);return e}
+const grp=(par,x,y,z)=>el(par,`transform:translate3d(${x}px,${-y}px,${z}px)`,"g");
+function box(par,x,z,w,d,h,y,c,o={}){const g=grp(par,x,y+h/2,z);
+ const F=(a,b,tf,f,lab)=>{const e=el(g,`width:${a}px;height:${b}px;left:${-a/2}px;top:${-b/2}px;background:${mix(c,f)};transform:${tf}`,"f");if(lab){e.innerHTML=lab;e.classList.add("lb")}};
+ F(w,h,`translateZ(${d/2}px)`,.85,o.front);F(w,h,`rotateY(180deg) translateZ(${d/2}px)`,.6);F(d,h,`rotateY(90deg) translateZ(${w/2}px)`,.72);F(d,h,`rotateY(-90deg) translateZ(${w/2}px)`,.62);F(w,d,`rotateX(90deg) translateZ(${h/2}px)`,1,o.top);return g}
+function cyl(par,x,z,R,h,y,c,o={}){const N=o.n||14,g=grp(par,x,y+h/2,z),sw=2*R*Math.sin(Math.PI/N)+.8;
+ for(let i=0;i<N;i++){const a=i*360/N,r=a*Math.PI/180,f=.6+.38*Math.max(0,-.4*Math.sin(r)+.9*Math.cos(r));
+  el(g,`width:${sw}px;height:${h}px;left:${-sw/2}px;top:${-h/2}px;background:${mix(c,f)};transform:rotateY(${a}deg) translateZ(${R*Math.cos(Math.PI/N)}px)`,"f")}
+ const t=el(g,`width:${2*R}px;height:${2*R}px;left:${-R}px;top:${-R}px;border-radius:50%;background:${mix(c,1)};transform:rotateX(90deg) translateZ(${h/2}px)`,"f");if(o.top){t.innerHTML=o.top;t.classList.add("lb")}return g}
+function buildRoom(){
+ const fl=grp(W,400,0,262);el(fl,"width:880px;height:755px;left:-440px;top:-377px;transform:rotateX(90deg);background:radial-gradient(ellipse at 50% 4%,rgba(242,169,59,.28),transparent 38%),linear-gradient(rgba(233,180,90,.07) 1px,transparent 1px) 0 0/40px 40px,linear-gradient(90deg,rgba(233,180,90,.07) 1px,transparent 1px) 0 0/40px 40px,#221628;border-radius:6px","f");
+ box(W,400,-122,960,10,175,0,"#4a1d56");
+ box(W,400,-115,300,4,48,112,"#17101c",{front:'<div class="sign">SHARMAJI</div>'});
+ const cols=["#7a1f3d","#b8741a","#e9b45a","#52205c","#9c4a1a","#6e2a5a","#c98a2c"];
+ [58,86].forEach(y=>{box(W,400,-110,560,12,3,y,"#8a5a2a");for(let i=0;i<14;i++)cyl(W,150+i*38,-110,6,i%3?20:26,y+3,cols[i%7],{n:6})});
+ box(W,-44,262,8,770,30,0,"#4a1d56");box(W,844,262,8,770,30,0,"#4a1d56");
+ // comptoir d'accueil
+ box(W,400,-20,320,44,50,0,"#6b3a1e",{front:'<span style="font:700 22px Cormorant,serif;color:#f2c27a;letter-spacing:.12em">नमस्ते · ACCUEIL · WELCOME</span>'});
+ box(W,400,-20,334,52,5,50,"#e0aa66");
+ box(W,452,-22,22,14,3,55,"#15111a");box(W,452,-14,22,2,16,55,"#15111a");cyl(W,340,-24,6,5,55,"#f2c27a",{n:10});
+ [300,400,500].forEach(x=>{box(W,x,-20,1,1,60,118,"#111");cyl(W,x,-20,11,14,104,"#f2c27a",{n:10})});
+ TB.forEach(mkTable)}
+const chairs=t=>t.c?[[-40,0,"w"],[40,0,"e"]]:[[-40,0,"w"],[40,0,"e"],[0,-40,"n"],[0,40,"s"]];
+function mkTable(t){if(t.g)t.g.remove();const g=t.g=grp(W,t.x,0,t.z),col=t.mine?"#e9b45a":t.occ=="r"?"#7a1f3d":t.occ=="o"?"#b8741a":"#efe6d6",txt=t.mine?"#2a0f33":t.occ?"#f6eadb":"#2b1636";
+ if(t.c){cyl(g,0,0,6,34,0,"#444",{n:8});cyl(g,0,0,30,5,34,col,{n:16,top:`<span style="font-size:24px;color:${txt}">${t.n}</span>`})}
+ else{box(g,0,0,9,9,34,0,"#444");box(g,0,0,58,58,5,34,col,{top:`<span style="font-size:26px;color:${txt}">${t.n}</span>`})}
+ chairs(t).forEach(([dx,dz,s])=>{box(g,dx,dz,20,20,18,0,"#4a2458");const bx=s=="w"?dx-9:s=="e"?dx+9:dx,bz=s=="n"?dz-9:s=="s"?dz+9:dz;
+  box(g,bx,bz,s=="w"||s=="e"?3:20,s=="n"||s=="s"?3:20,16,18,"#5c2d6b")});
+ if(t.occ){[-9,9].forEach(o=>cyl(g,o,0,6,1.5,39,"#ffffff",{n:8}));cyl(g,0,12,3,9,39,"#cfe8ff",{n:6})}
+ if(t.mine)el(g,"width:170px;height:170px;left:-85px;top:-85px;transform:translateY(-1px) rotateX(90deg)","f ring")}
+/* personnages en blocs */
+function person(par,o){const g=grp(par,0,0,0),P={};
+ const limb=(x,y,len,w,c)=>{const p=grp(g,x,y,0);box(p,0,0,w,w,len,-len,c);return p};
+ P.lL=limb(-6,40,40,9,"#2a2233");P.lR=limb(6,40,40,9,"#2a2233");
+ box(g,0,0,24,13,28,40,o.shirt);box(g,0,6.6,26,1,7,44,"#f2a93b");
+ P.aL=limb(-15,66,30,8,o.shirt);P.aR=limb(15,66,30,8,o.shirt);
+ box(g,0,0,13,13,13,68,"#e0ac82");box(g,0,0,14,14,5,79,o.hair);
+ box(g,-3.4,6.6,2.4,1,2.4,74,"#111");box(g,3.4,6.6,2.4,1,2.4,74,"#111");const mw=grp(g,0,70.7,6.9);P.mouth=el(mw,"","g");box(P.mouth,0,0,6,1,1.6,-.8,"#7a2424");box(g,0,6.9,8,1,1.4,71.8,"#1b1210");
+ P.tray=grp(g,0,58,18);box(P.tray,0,0,22,16,2,0,"#c9a15a");P.tray.style.display="none";P.bottle=grp(P.tray,0,2,0);return P}
+const SV={x:400,z:-78,rot:0,rg:0,q:[],res:null,mode:"idle",carry:false,t:0};let SP,SPG;
+function buildActors(){SPG=el(W,"","g");SP=person(SPG,{shirt:"#52205c",hair:"#1b1210"})}
+function guestFig(t){const cs=chairs(t),sh=["#f2a93b","#3a82c4","#2e9e5b","#8e44ad"];
+ for(let i=0;i<covers;i++){const[dx,dz,s]=cs[i%cs.length];const w=el(W,`transform:translate3d(${t.x+dx*.82}px,0px,${t.z+dz*.82}px)`,"g"),p=el(w,"","g pop");p.style.animationDelay=i*.15+"s";
+  box(p,0,0,16,11,17,22,sh[i%4]);box(p,0,0,12,12,12,40,"#e0ac82");box(p,0,0,13,13,4,51,i%2?"#1b1210":"#4a2c1a")}}
+/* ---- déplacement du serveur : grille + recherche de chemin ---- */
+const CS=20,GX=-60,GZ=-130,NX=46,NZ=40;
+const grid=(()=>{const g=new Uint8Array(NX*NZ);for(let j=0;j<NZ;j++)for(let i=0;i<NX;i++){const x=GX+i*CS+10,z=GZ+j*CS+10;let b=0;
+ if(x>=226&&x<=574&&z>=-60&&z<=20)b=1;TB.forEach(t=>{if(Math.abs(x-t.x)<58&&Math.abs(z-t.z)<58)b=1});if(x<-30||x>830||z<-110||z>630)b=1;g[j*NX+i]=b}return g})();
+const cell=(x,z)=>[Math.max(0,Math.min(NX-1,Math.floor((x-GX)/CS))),Math.max(0,Math.min(NZ-1,Math.floor((z-GZ)/CS)))];
+function route(a,b){const[s0,s1]=cell(a.x,a.z),[e0,e1]=cell(b.x,b.z),S=s1*NX+s0,E=e1*NX+e0;if(grid[E])return null;
+ const prev=new Int32Array(NX*NZ).fill(-2);prev[S]=-1;const q=[S];
+ for(let h=0;h<q.length;h++){const c=q[h];if(c==E)break;const i=c%NX,j=c/NX|0;for(const[di,dj]of[[1,0],[-1,0],[0,1],[0,-1]]){const ni=i+di,nj=j+dj;if(ni<0||nj<0||ni>=NX||nj>=NZ)continue;const n=nj*NX+ni;if(prev[n]!=-2||grid[n])continue;prev[n]=c;q.push(n)}}
+ if(prev[E]==-2)return null;const p=[];for(let c=E;c!=-1;c=prev[c])p.push({x:GX+(c%NX)*CS+10,z:GZ+(c/NX|0)*CS+10});p.reverse();
+ const out=p.filter((pt,k)=>{if(k==0||k==p.length-1)return true;const a=p[k-1],b=p[k+1];return (pt.x-a.x)*(b.z-pt.z)!=(pt.z-a.z)*(b.x-pt.x)});out.push({...b});return out}
+function approach(t,from){for(const r of[72,86,100])for(const[ax,az]of[[0,1],[1,0],[-1,0],[0,-1],[.7,.7],[-.7,.7]]){const pt={x:t.x+ax*r,z:t.z+az*r},p=route(from,pt);if(p)return p}return null}
+const walk=path=>new Promise(res=>{SV.q=path.slice();SV.res=res;SV.mode=SV.carry?"carry":"walk";if(!path.length){SV.mode="idle";res()}});
+const HOME={x:400,z:-78};
+const face=t=>{SV.rg=Math.atan2(t.x-SV.x,t.z-SV.z)*180/Math.PI};
+/* ---- caméra libre (orbite) ---- */
+const PERS=900,cam={tx:400,ty:40,tz:-30,yaw:0,pitch:22,dist:640},goal={...cam};
+const PRE={bar:{tx:400,ty:40,tz:-30,yaw:0,pitch:22,dist:640},room:{tx:400,ty:0,tz:280,yaw:0,pitch:56,dist:1350}};
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const LAND=()=>innerWidth>innerHeight&&innerHeight<520,PORT=()=>!LAND()&&innerWidth<860;
+if(PORT()){PRE.bar.dist=980;PRE.room.dist=1650;cam.dist=goal.dist=980}else if(LAND()){PRE.bar.dist=820;PRE.room.dist=1500;cam.dist=goal.dist=820}
+let drag=null,ptrs=new Map(),lastTf="";
+const tabCam=()=>({tx:myTable.x,ty:20,tz:myTable.z,yaw:-22,pitch:38,dist:PORT()?640:LAND()?560:460});
+function applyCam(){const tf=`translateZ(${(PERS-cam.dist).toFixed(1)}px) rotateX(${(-cam.pitch).toFixed(2)}deg) rotateY(${cam.yaw.toFixed(2)}deg) translate3d(${(-cam.tx).toFixed(1)}px,${cam.ty.toFixed(1)}px,${(-cam.tz).toFixed(1)}px)`;if(tf!=lastTf){W.style.transform=tf;lastTf=tf}}
+const setGoal=g=>Object.assign(goal,g);
+const vp=$("vp");
+vp.addEventListener("pointerdown",e=>{ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});try{vp.setPointerCapture(e.pointerId)}catch(x){}drag=true});
+vp.addEventListener("pointermove",e=>{const p=ptrs.get(e.pointerId);if(!p)return;const dx=e.clientX-p.x,dy=e.clientY-p.y;
+ if(ptrs.size==2){const o=[...ptrs.entries()].find(([id])=>id!=e.pointerId)[1],d0=Math.hypot(p.x-o.x,p.y-o.y),d1=Math.hypot(e.clientX-o.x,e.clientY-o.y);if(d1>0)goal.dist=clamp(goal.dist*d0/d1,260,1700)}
+ else{goal.yaw+=dx*.28;goal.pitch=clamp(goal.pitch+dy*.22,6,86)}p.x=e.clientX;p.y=e.clientY});
+const up=e=>{ptrs.delete(e.pointerId);if(!ptrs.size)drag=null};vp.addEventListener("pointerup",up);vp.addEventListener("pointercancel",up);
+vp.addEventListener("wheel",e=>{e.preventDefault();goal.dist=clamp(goal.dist*(1+e.deltaY*.0012),260,1700)},{passive:false});
+vp.addEventListener("dblclick",()=>setGoal(myTable?tabCam():PRE.bar));
+/* ---- boucle ---- */
+let last=performance.now();
+function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/1000);last=now;SV.t+=dt;
+ const k=1-Math.exp(-dt*(drag?16:4.2));for(const key in cam)cam[key]+=(goal[key]-cam[key])*k;applyCam();animSV(dt)}
+function animSV(dt){const S=SV,P=SP;
+ if(S.q.length){const t=S.q[0],dx=t.x-S.x,dz=t.z-S.z,d=Math.hypot(dx,dz),st=150*dt;if(d>.5)S.rg=Math.atan2(dx,dz)*180/Math.PI;
+  if(d<=st){S.x=t.x;S.z=t.z;S.q.shift();if(!S.q.length){S.mode="idle";const r=S.res;S.res=null;r&&r()}}else{S.x+=dx/d*st;S.z+=dz/d*st}}
+ const df=((S.rg-S.rot+540)%360)-180;S.rot+=df*(1-Math.exp(-dt*9));
+ const w=S.mode=="walk"||S.mode=="carry",ph=S.t*9,sw=w?Math.sin(ph)*38:0,bob=w?Math.abs(Math.sin(ph))*2.2:Math.sin(S.t*1.6)*.5;
+ SPG.style.transform=`translate3d(${S.x.toFixed(1)}px,${(-bob).toFixed(2)}px,${S.z.toFixed(1)}px) rotateY(${S.rot.toFixed(1)}deg)`;
+ P.lL.style.transform=`rotateX(${sw}deg)`;P.lR.style.transform=`rotateX(${-sw}deg)`;
+ let aL=-sw*.9,aR=sw*.9,rz=0;
+ if(S.mode=="carry"){aL=aR=-80}else if(S.mode=="wave"){aR=0;rz=150+Math.sin(S.t*9)*18}else if(!w){aL=Math.sin(S.t*1.6)*3;aR=-aL}
+ P.aL.style.transform=`rotateX(${aL}deg)`;P.aR.style.transform=`rotateX(${aR}deg) rotateZ(${rz}deg)`;
+ P.tray.style.display=S.carry?"":"none";
+ const lv=cloudLevel(),tk=CV.playing||VO.talk&&performance.now()-VO.lastB<650;P.mouth.style.transform=`scaleY(${CV.playing?(1+lv*3.2).toFixed(2):tk?(1+2.2*Math.abs(Math.sin(S.t*17))*(.6+.4*Math.sin(S.t*5.3))).toFixed(2):1})`;
+ if(tk&&!w&&S.mode=="idle"){P.aR.style.transform=`rotateX(${-12-8*Math.sin(S.t*2.4)}deg) rotateZ(8deg)`}}
+/* ================= SERVEUR IA (prise de commande) ================= */
+const log=$("log");
+function addMsg(type,html){const d=document.createElement("div");d.className="m "+type;d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
+/* ---------- VOIX : meilleure voix du navigateur, texte nettoyé, phrases enchaînées ---------- */
+const TTS=window.speechSynthesis,VO={list:[],talk:0,lastB:0,keep:null};
+const vlang=()=>ST.lang=="fr"?"fr":"en";
+function vScore(v){const n=(v.name+" "+(v.voiceURI||"")).toLowerCase(),l=v.lang.toLowerCase().replace("_","-");if(!l.startsWith(vlang()))return -1;let s=0;
+ if(/natural|neural/.test(n))s+=60;if(/online/.test(n))s+=25;if(/premium|enhanced|améliorée|amelioree|siri/.test(n))s+=45;if(/google/.test(n))s+=30;
+ if(/denise|vivienne|eloise|henri|remy|rémy|amélie|amelie|thomas|audrey|aurelie|aurélie|marie|jenny|aria|guy|ava|andrew|emma|brian|samantha|daniel|serena/.test(n))s+=12;
+ if(l==(ST.lang=="fr"?"fr-fr":"en-us")||(ST.lang=="en"&&l=="en-gb"))s+=8;if(/compact|espeak|robot|novelty|whisper|zarvox|bells|bad news|jester|trinoids|albert|bubbles|cellos|organ|boing|hysterical|superstar|wobble|grandma|grandpa|rocko|shelley|flo|eddy|reed|sandy/.test(n))s-=80;return s}
+function voices(){return VO.list.filter(v=>vScore(v)>=0).sort((a,b)=>vScore(b)-vScore(a))}
+function curVoice(){const vs=voices();return vs.find(v=>v.name==ST.vname[vlang()])||vs[0]||null}
+function loadVoices(){if(!TTS)return;VO.list=TTS.getVoices();vsUI()}
+if(TTS){setTimeout(loadVoices,0);TTS.onvoiceschanged=()=>setTimeout(loadVoices,0);setTimeout(loadVoices,600);setTimeout(loadVoices,2000)}
+function cleanTxt(html){let t=html.replace(/<br\s*\/?>/gi,". ").replace(/<small>.*?<\/small>/gi,m=>" "+m+" ").replace(/<[^>]+>/g," ")
+  .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}⚠↺➤✓]/gu," ")
+  .replace(/(\d+)\s*×/g,"$1 ").replace(/(\d+),00\s*€/g,"$1 euros").replace(/(\d+),(\d\d)\s*€/g,"$1 euros $2").replace(/€/g," euros")
+  .replace(/[«»“”"]/g,"").replace(/\s*·\s*/g,", ").replace(/\s*;\s*/g,". ").replace(/\(\s*/g,", ").replace(/\s*\)/g,", ")
+  .replace(/Sharmaji/g,"Sharma-ji").replace(/\bRaj\b/g,"Râdj").replace(/\s+([,.!?])/g,"$1").replace(/,\s*,/g,",").replace(/,\s*([.!?])/g,"$1").replace(/,\s*$/,"").replace(/\.\s*\./g,".").replace(/\s+/g," ").trim();
+ if(ST.lang=="en")t=t.replace(/Sharma-ji/g,"Sharma-jee").replace(/Râdj/g,"Raj");return t}
+function chunks(t){const out=[];(t.match(/[^.!?…]+[.!?…]*\s*/g)||[t]).forEach(p=>{p=p.trim();if(!p)return;while(p.length>170){let k=p.lastIndexOf(",",170);if(k<60)k=p.lastIndexOf(" ",170);out.push(p.slice(0,k+1));p=p.slice(k+1).trim()}if(p)out.push(p)});return out}
+/* --- voix neuronale via le relais (ElevenLabs) + synchronisation des lèvres --- */
+const CV={cache:new Map(),audio:null,ctx:null,an:null,buf:null,ok:null,level:0,playing:false,warned:false};
+const serverUrl=()=>(ST.vurl||VOICE_SERVER||"").trim();
+const cloudOn=()=>ST.voice&&serverUrl()&&!(CV.ok===false&&Date.now()-(CV.failAt||0)<60000);
+function cloudFetch(t){const key=ST.lang+"|"+t;if(CV.cache.has(key))return CV.cache.get(key);
+ const ctl=new AbortController(),to=setTimeout(()=>ctl.abort(),9000);
+ const pr=fetch(serverUrl(),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:t,lang:ST.lang}),signal:ctl.signal})
+  .then(r=>{clearTimeout(to);if(!r.ok)return r.text().then(x=>{throw new Error(r.status+" "+x)});return r.blob()})
+  .then(b=>{CV.ok=true;vStatus();return URL.createObjectURL(b)})
+  .catch(e=>{CV.cache.delete(key);CV.ok=false;CV.failAt=Date.now();CV.err=String(e.message||e);vStatus();throw e});
+ CV.cache.set(key,pr);return pr}
+function audioGraph(){if(CV.audio)return;CV.audio=new Audio();CV.audio.preload="auto";
+ try{const AC=window.AudioContext||window.webkitAudioContext;CV.ctx=new AC();const src=CV.ctx.createMediaElementSource(CV.audio);CV.an=CV.ctx.createAnalyser();CV.an.fftSize=512;CV.buf=new Uint8Array(CV.an.fftSize);src.connect(CV.an);CV.an.connect(CV.ctx.destination)}catch(e){CV.ctx=null}}
+function cloudLevel(){if(!CV.playing||!CV.an){CV.level*=.8;return CV.level}CV.an.getByteTimeDomainData(CV.buf);let s=0;for(let i=0;i<CV.buf.length;i++){const v=(CV.buf[i]-128)/128;s+=v*v}const r=Math.sqrt(s/CV.buf.length);CV.level+=(Math.min(1,r*5)-CV.level)*.45;return CV.level}
+function cloudSpeak(t){return cloudFetch(t).then(url=>new Promise((res,rej)=>{audioGraph();const a=CV.audio;if(CV.ctx&&CV.ctx.state=="suspended")CV.ctx.resume();
+ a.onended=()=>{CV.playing=false;VO.talk=0;res()};a.onerror=()=>{CV.playing=false;VO.talk=0;rej(new Error("audio"))};
+ a.src=url;a.playbackRate=ST.rate;a.preservesPitch=true;const p=a.play();CV.playing=true;VO.talk=1;VO.lastB=performance.now();
+ if(p&&p.catch)p.catch(e=>{CV.playing=false;VO.talk=0;rej(e)})}))}
+function vStatus(){const e=$("vst");if(!e)return;const u=serverUrl();
+ e.textContent=!u?L("Voix du navigateur (ajoutez un relais pour une voix humaine).","Browser voice (add a relay for a human voice)."):CV.ok===true?L("Voix humaine connectée.","Human voice connected."):CV.ok===false?L("Relais injoignable, voix du navigateur utilisée. ","Relay unreachable, using the browser voice. ")+(CV.err||"").slice(0,90):L("Relais configuré, en attente du premier message.","Relay set, waiting for the first message.");
+ e.style.color=CV.ok===false?"#ff8a80":CV.ok===true?"#5fd39a":""}
+function stopVoice(){if(TTS){TTS.cancel()}if(CV.audio){CV.audio.pause();CV.playing=false}VO.talk=0;clearInterval(VO.keep)}
+function speak(html){if(cloudOn()){const t=cleanTxt(html);if(!t)return Promise.resolve();stopVoice();
+  return cloudSpeak(t).catch(e=>{if(e&&e.name=="NotAllowedError")return;return browserSpeak(html)})}return browserSpeak(html)}
+function prefetch(html){if(cloudOn()){const t=cleanTxt(html);if(t)cloudFetch(t).catch(()=>{})}}
+function browserSpeak(html){return new Promise(res=>{if(!ST.voice||!TTS||!VO.list.length)return res();const t=cleanTxt(html);if(!t)return res();
+ const v=curVoice(),parts=chunks(t);let done=false;const fin=()=>{if(done)return;done=true;VO.talk=0;clearInterval(VO.keep);res()};
+ TTS.cancel();VO.talk=1;VO.lastB=performance.now();
+ parts.forEach((p,i)=>{const u=new SpeechSynthesisUtterance(p);u.lang=ST.lang=="fr"?"fr-FR":"en-US";if(v){try{u.voice=v;u.lang=v.lang}catch(e){}}
+  u.rate=ST.rate;u.pitch=ST.pitch;u.volume=1;u.onstart=()=>{VO.talk=1;VO.lastB=performance.now()};u.onboundary=()=>{VO.lastB=performance.now()};
+  if(i==parts.length-1){u.onend=fin;u.onerror=fin}else u.onerror=fin;TTS.speak(u)});
+ clearInterval(VO.keep);VO.keep=setInterval(()=>{if(TTS.speaking&&!TTS.paused){TTS.pause();TTS.resume()}},10000);
+ setTimeout(fin,1500+t.length*95/ST.rate)})}
+async function say(html,type="bot"){if(type=="bot"){prefetch(html);const t=addMsg("bot",'<span class="dots"><i></i><i></i><i></i></span>');
+  await sleep(ST.voice&&(TTS||serverUrl())?380:Math.min(1200,300+html.length*5));t.innerHTML=html;log.scrollTop=log.scrollHeight;await speak(html)}
+ else{addMsg(type,html);if(type=="sys")await speak(html)}log.scrollTop=log.scrollHeight}
+function vsUI(){const sel=$("vsel");if(!sel)return;const vs=voices(),cv=curVoice();
+ sel.innerHTML=vs.length?vs.map(v=>`<option value="${esc(v.name)}"${cv&&v.name==cv.name?" selected":""}>${esc(v.name.replace(/Microsoft |Google /,"").replace(/ - .*$/,""))} (${v.lang})${vScore(v)>=55?L(" · naturelle"," · natural"):""}</option>`).join(""):`<option>${L("Aucune voix trouvée","No voice found")}</option>`;
+ $("vrate").value=ST.rate;$("vpitch").value=ST.pitch;$("vsl1").textContent=L("Voix","Voice");$("vsl2").textContent=L("Vitesse","Speed");$("vsl3").textContent=L("Hauteur","Pitch");$("vtest").textContent=L("Tester la voix","Test the voice");$("vsl4").textContent=L("Voix humaine","Human voice");$("vurl").value=ST.vurl||VOICE_SERVER;vStatus();
+ $("vtip").textContent=TTS?L("« naturelle » = voix la plus humaine. Les plus réalistes : Edge (voix « Natural »), Chrome (Google), Safari (voix « Premium » à télécharger dans les réglages du système).","“natural” = most human voice. Most realistic: Edge (“Natural” voices), Chrome (Google), Safari (download a “Premium” voice in system settings)."):L("Votre navigateur ne propose pas de synthèse vocale.","Your browser has no speech synthesis.");
+ $("vo").innerHTML=IC(ST.voice?"vol":"mute");$("vo").classList.toggle("on",ST.voice)}
+$("vsel").onchange=e=>{ST.vname[vlang()]=e.target.value;saveV()};
+$("vurl").onchange=e=>{ST.vurl=e.target.value.trim();CV.ok=null;CV.cache.clear();saveV();vStatus()};
+$("vrate").oninput=e=>{ST.rate=+e.target.value;saveV()};$("vpitch").oninput=e=>{ST.pitch=+e.target.value;saveV()};
+$("vtest").onclick=()=>{const was=ST.voice;ST.voice=true;speak(L("Namaste ! Je suis Raj, bienvenue chez Sharmaji. Que puis-je vous servir ce soir ?","Namaste! I’m Raj, welcome to Sharmaji. What can I get you tonight?")).then(()=>{ST.voice=was})};
+$("vso").onclick=()=>{$("vs").classList.toggle("on");$("vso").classList.toggle("on",$("vs").classList.contains("on"));vsUI()};
+const B=i=>"<b>"+M[i].n+"</b>";
+const alN=a=>AL[a][LI()];
+function allergenLine(i){const d=M[i];let s=d.al.length?L("Allergènes sur la carte : ","Allergens on the menu: ")+d.al.map(alN).join(", ")+".":L("Aucun allergène listé sur la carte.","No allergen listed on the menu.");
+ if(d.i.length)s+=" "+L("Peut aussi contenir (à confirmer avec la cuisine) : ","May also contain (to confirm with the kitchen): ")+d.i.map(alN).join(", ")+".";return s}
+const has=(n,w)=>w.some(x=>new RegExp("\\b"+x).test(n));
+const NUM={un:1,une:1,one:1,a:1,an:1,deux:2,two:2,trois:3,three:3,quatre:4,four:4,cinq:5,five:5,six:6,sept:7,seven:7,huit:8,eight:8};
+const numOf=s=>/^\d+$/.test(s)?+s:NUM[s]||0;
+const NW="(\\d+|un|une|deux|trois|quatre|cinq|six|sept|huit|one|two|three|four|five|seven|eight)";
+function detectCovers(n){let m=n.match(new RegExp("\\b"+NW+"\\s*(personnes?|pers|couverts?|people|persons?|guests?|convives?|adultes?)\\b"));if(m)return numOf(m[1]);
+ m=n.match(new RegExp("(on est|on sera|nous sommes|nous serons|we are|we re|table pour|table for|there are|there will be)\\s+"+NW+"\\b"));if(m)return numOf(m[2]);
+ m=n.match(/^\s*(\d{1,2})\s*$/);return m?+m[1]:null}
+function detectAllergy(n){if(!/allerg|intoler|sans |without|\bfree\b|ne peux pas|cannot|can t|ne mange pas|evite|avoid/.test(n))return[];return Object.keys(AK).filter(a=>has(n,AK[a]))}
+const conflict=(i,al)=>{const ex=a=>al.includes(a)||(a=="nuts"&&al.includes("almond"))||(a=="almond"&&al.includes("nuts"));return{hit:M[i].al.filter(ex),may:M[i].i.filter(ex)}};
+const risky=i=>{const c=conflict(i,uAl);return c.hit.length+c.may.length>0};
+function addDish(i,q){const o=order.find(x=>x.id==i);if(o)o.q+=q;else order.push({id:i,q});ui()}
+const FILL="(?:(?:de|des|d|of|le|la|les|l|du|the|x|dum|murgh|shahi|lamb|veg|hyderabad|saint|palak|dorade|xacuti|three)\\s+){0,3}$";
+function findDishes(n){const out=[];M.forEach((d,i)=>{for(const k of d.k){const m=n.match(new RegExp("\\b"+k));if(!m)continue;const pos=m.index,before=n.slice(Math.max(0,pos-28),pos);
+ let q=1,mm=before.match(new RegExp("\\b"+NW+"\\s+"+FILL));if(mm&&!(i==1&&mm[1]=="three")){const v=numOf(mm[1]);if(v)q=Math.min(v,8)}
+ const ax=n.slice(pos).match(/^\S+\s*x\s*(\d)/);if(ax)q=+ax[1];out.push({i,q,pos});break}});return out.sort((a,b)=>a.pos-b.pos)}
+const recap=()=>L("Votre commande : ","Your order: ")+order.map(o=>`${o.q}× ${M[o.id].n}`).join(", ")+".";
+const askMore=()=>L("Autre chose ? Dites « c’est tout » pour valider.","Anything else? Say “that’s all” to confirm.");
+const DRINK_W=["cocktail","boisson","drink","vin","wine","biere","beer","soda","jus","juice","alcool","cafe","coffee","tea","infusion","lassi","chai","carte des"];
+const NOTDRINK="Les menus de cocktails et de boissons ne sont pas encore disponibles sur le site.";
+async function orderLogic(n){
+ const found=findDishes(n);
+ // 0. réponse à une alerte allergène
+ if(pend){const yes=has(n,["oui","yes","ok","garde","keep","quand meme","anyway","d accord","ajoute","add it"]),no=has(n,["non","no","annule","cancel","pas"]);
+  if(yes&&!no){const p=pend;pend=null;p.forEach(x=>addDish(x.i,x.q));await say((pendSoft?L("Très bien, je l’ajoute. ","Alright, I’ll add it. "):L("Très bien, je l’ajoute et je préviens la cuisine. ","Alright, I’ll add it and warn the kitchen. "))+recap()+" "+askMore());return}
+  if(no){pend=null;await say(L("D’accord, je ne l’ajoute pas. Voulez-vous un conseil sans risque ?","Alright, I won’t add it. Would you like a safe suggestion?"));return}pend=null}
+ // 1. nombre de personnes
+ const cv=detectCovers(n);
+ if(cv!==null){if(cv>4){await say(L(`Pour ${cv} personnes, je vous conseille de <a href="https://www.sharmaji.fr" target="_blank" rel="noopener">réserver directement auprès du restaurant</a>. Dans cette simulation, une table accueille jusqu’à 4 personnes : combien serez-vous ?`,`For ${cv} guests, please <a href="https://www.sharmaji.fr" target="_blank" rel="noopener">book directly with the restaurant</a>. In this simulation a table seats up to 4: how many will you be?`));return}
+  if(cv>=1){covers=cv;ui();if(wantConfirm){await confirmOrder();return}if(!found.length){await say(L(`Parfait, une table pour ${cv}. `,`Perfect, a table for ${cv}. `)+(order.length?askMore():L("Que souhaitez-vous commander ?","What would you like to order?")));return}}}
+ // 2. allergies
+ const al=detectAllergy(n);if(al.length){al.forEach(a=>{if(!uAl.includes(a))uAl.push(a)});
+  const safe=M.map((d,i)=>i).filter(i=>!risky(i));
+  await say(L(`Noté : allergie « ${uAl.map(alN).join(", ")} ». Je le transmets à la cuisine et je vous préviens si un plat est concerné. Sans risque d’après la carte : `,`Noted: allergy “${uAl.map(alN).join(", ")}”. I’ll tell the kitchen and warn you if a dish is concerned. Safe according to the menu: `)+(safe.length?safe.map(B).join(", "):L("aucun plat","no dish"))+".");
+  if(!found.length)return}
+ // 3. boissons
+ if(!found.length&&has(n,DRINK_W)){await say(L(NOTDRINK+" Une fois installé, je vous proposerai de l’eau plate ou pétillante.","The cocktail and drinks menus are not yet available on the website. Once you are seated, I’ll offer you still or sparkling water."));return}
+ // 4. valider
+ if(has(n,["c est tout","cest tout","c est bon","ca sera tout","valide","termine","fini","that s all","thats all","that s it","that will be all","done","confirm","finish","envoie"])){await confirmOrder();return}
+ // 5. retirer
+ if(has(n,["enleve","retire","supprime","remove","annule","delete","sans le","sans la"])&&!al.length){
+  if(has(n,["tout","all","everything"])){order=[];ui();await say(L("J’ai vidé votre commande.","I’ve cleared your order."));return}
+  if(found.length){found.forEach(x=>{const o=order.find(z=>z.id==x.i);if(o){o.q-=x.q;if(o.q<=0)order=order.filter(z=>z!=o)}});ui();await say(L("C’est retiré. ","Removed. ")+(order.length?recap():L("Votre commande est vide.","Your order is empty.")));return}}
+ // 6. plats
+ if(!found.length&&/\bmurgh\b|\bpoulet\b|\bchicken\b/.test(n)){await say(L("Nous avons deux plats au poulet : le <b>Murgh Badami</b> (sauce amandes-safran) et le <b>Murgh Ghee Roast</b> (beurre clarifié et cajou). Lequel souhaitez-vous ?","We have two chicken dishes: <b>Murgh Badami</b> (almond-saffron sauce) and <b>Murgh Ghee Roast</b> (clarified butter and cashew). Which would you like?"));return}
+ if(found.length){
+  const isQ=/\?|contient|contain|ingredient|dedans|inside|c est quoi|what is|what s|qu est ce|parle|decri|describe|epice|spicy|piquant|vegetar|vegan|allergen/.test(n)&&!/je (veux|voudrais|prends|prendrai)|i d like|i want|i ll have|i will have|give me|ajoute|add /.test(n);
+  if(isQ){const i=found[0].i;let s;
+   if(/vegetar|vegan/.test(n))s=M[i].v==2?L(`Oui, ${B(i)} est végétarien et peut être préparé végane.`,`Yes, ${B(i)} is vegetarian and can be made vegan.`):M[i].v?L(`Oui, ${B(i)} est végétarien.`,`Yes, ${B(i)} is vegetarian.`):i==11?L(`La carte ne précise pas si ${B(i)} est végétarien : je demande à la cuisine.`,`The menu doesn’t say whether ${B(i)} is vegetarian: I’ll ask the kitchen.`):L(`Non, ${B(i)} n’est pas végétarien.`,`No, ${B(i)} is not vegetarian.`);
+   else if(/piquant|spicy|epice/.test(n))s=L(`Le niveau de piment de ${B(i)} n’est pas indiqué sur la carte : je peux demander à la cuisine de l’adoucir.`,`The heat level of ${B(i)} isn’t listed on the menu: I can ask the kitchen to make it milder.`);
+   else s=`${B(i)} <small>(${M[i].r})</small> : ${ST.lang=="fr"?M[i].fr:M[i].en}`;
+   await say(s+"<br><small>"+allergenLine(i)+"</small><br>"+L("Je vous l’ajoute ?","Shall I add it?"));pend=[{i,q:found[0].q}];pendSoft=true;return}
+  const ok=found.filter(f=>!risky(f.i)),bad=found.filter(f=>risky(f.i));ok.forEach(f=>addDish(f.i,f.q));
+  let s=cv&&cv>=1?L(`Table pour ${cv}, noté. `,`Table for ${cv}, noted. `):"";
+  if(ok.length)s+=L("Ajouté : ","Added: ")+ok.map(f=>`${f.q}× ${M[f.i].n}`).join(", ")+". ";
+  if(bad.length){pend=bad.map(f=>({i:f.i,q:f.q}));pendSoft=false;s+=IC("warn")+" "+bad.map(f=>{const c=conflict(f.i,uAl);return L(`${B(f.i)} contient ${c.hit.concat(c.may).map(a=>alN(a).toLowerCase()).join(", ")}${c.hit.length?" (indiqué sur la carte)":" (à confirmer avec la cuisine)"}`,`${B(f.i)} contains ${c.hit.concat(c.may).map(a=>alN(a).toLowerCase()).join(", ")}${c.hit.length?" (listed on the menu)":" (to confirm with the kitchen)"}`)}).join(" ; ")+". "+L("Je ne l’ajoute que si vous me répondez « oui ».","I’ll only add it if you answer “yes”.")}
+  else s+=recap()+" "+(covers?askMore():L("Combien de personnes êtes-vous ?","How many people are you?"));
+  await say(s);return}
+ // 7. questions générales
+ if(has(n,["vegetarien","vegetarian","vegan","vegane"])){await say(L("Plats végétariens : ","Vegetarian dishes: ")+M.map((d,i)=>d.v?B(i):"").filter(Boolean).join(", ")+L(". Végane possible : ",". Vegan option: ")+B(1)+".");return}
+ if(has(n,["recommand","conseil","suggest","what should","que choisir","que prendre","menu","carte","propos","what do you","option","specialite","signature","idee","idea"])){
+  const pool=[0,7,11,10,2,1].filter(i=>!risky(i)).slice(0,4);
+  await say(L("Je vous conseille : ","I recommend: ")+pool.map(i=>`${B(i)} <small>(${ST.lang=="fr"?M[i].fr:M[i].en})</small>`).join("<br>")+"<br>"+L("Vous pouvez aussi toucher « Carte » pour ajouter en un clic.","You can also tap “Menu” to add in one tap."));return}
+ if(has(n,["bonjour","salut","hello","hi","hey","namaste","bonsoir","good evening"])){await say(L("Namaste ! Combien de personnes êtes-vous, et que souhaitez-vous manger ?","Namaste! How many are you, and what would you like to eat?"));return}
+ if(has(n,["merci","thank"])){await say(L("Avec plaisir !","My pleasure!"));return}
+ if(has(n,["prix","price","combien coute","how much","cher"])){await say(L("Les prix de cette simulation sont fictifs. Votre total actuel : ","Prices in this simulation are fictional. Your current total: ")+eur(total())+".");return}
+ await say(L("Je suis là pour prendre votre commande. Dites par exemple « 2 Dum Biryani et un Palak Paneer », demandez un conseil, ou touchez « Carte ». Quand vous avez fini : « c’est tout ».","I’m here to take your order. Say for instance “2 Dum Biryani and a Palak Paneer”, ask for a suggestion, or tap “Menu”. When you’re done: “that’s all”."))}
+let pendSoft=false;
+async function confirmOrder(){if(!order.length){wantConfirm=false;await say(L("Votre commande est encore vide : que souhaitez-vous ?","Your order is still empty: what would you like?"));return}
+ if(!covers){wantConfirm=true;await say(L("Avant de valider : combien de personnes êtes-vous ?","Before I confirm: how many people are you?"));return}
+ wantConfirm=false;await seat()}
+/* ================= PARCOURS : installation → cuisine → boisson ================= */
+async function seat(){phase="seating";ui();
+ const rank=t=>Math.hypot(t.x-400,t.z+20);
+ let cand=TB.filter(t=>!t.occ&&t.cap>=covers).sort((a,b)=>{if(covers<=2&&a.c!=b.c)return a.c?-1:1;return rank(a)-rank(b)});
+ let tbl=null,path=null;for(const t of cand){const p=approach(t,{x:SV.x,z:SV.z});if(p){tbl=t;path=p;break}}
+ if(!tbl){tbl=cand[0];path=[{x:tbl.x,z:tbl.z+80}]}
+ myTable=tbl;tbl.mine=true;mkTable(tbl);$("c3").disabled=false;
+ await say(L(`Parfait, merci ! Je vous installe à la <b>table ${tbl.n}</b>. Suivez-moi !`,`Perfect, thank you! I’m seating you at <b>table ${tbl.n}</b>. Follow me!`));
+ SV.mode="wave";await sleep(800);setGoal(tabCam());
+ await walk(path);face(tbl);
+ guestFig(tbl);$("tbl").textContent=L(`Table ${tbl.n} · ${covers} couvert${covers>1?"s":""}`,`Table ${tbl.n} · ${covers} guest${covers>1?"s":""}`);$("tbl").classList.add("on");
+ await say(L("Voilà, installez-vous confortablement. Je transmets votre commande à la cuisine.","Here we are, make yourselves comfortable. I’m sending your order to the kitchen."));
+ phase="kitchen";ui();await sleep(700);kitchen();
+ await say(L("Votre commande est arrivée chez les cuisiniers.","Your order has arrived at the kitchen."),"sys");
+ await sleep(1400);phase="drink";ui();
+ await say(L(`En attendant vos plats, puis-je vous proposer de l’<b>eau plate</b> ou de l’<b>eau pétillante</b> ?<br><small>${NOTDRINK}</small>`,"While you wait for your dishes, may I offer you <b>still water</b> or <b>sparkling water</b>?<br><small>The cocktail and drinks menus are not yet available on the website.</small>"))}
+function kitchen(){const k=$("kt");
+ k.innerHTML=`<h3>${L("Cuisine","Kitchen")} · Table ${myTable.n}</h3><div>${covers} ${L("couvert(s)","guest(s)")}</div><ul>${order.map(o=>`<li>${o.q}× ${M[o.id].n}</li>`).join("")}</ul>${uAl.length?`<div class="w">${IC("warn")} ${L("Allergies","Allergies")} : ${uAl.map(alN).join(", ")}</div>`:""}<div style="margin-top:8px;color:#6e5a78;font-size:13px">${L("Commande reçue · en préparation","Order received · being prepared")}</div>`;
+ k.classList.add("on");setTimeout(()=>k.classList.remove("on"),6500)}
+async function drinkLogic(n){
+ const sp=has(n,["petillant","sparkling","gazeu","bulle","fizzy","perrier","badoit"]),pl=has(n,["plate","still","flat","nature","carafe","robinet","tap"]);
+ if(sp!=pl){await serve(sp?"sparkling":"still");return}
+ if(has(n,["rien","non merci","no thanks","none","nothing","pas soif"])){await serve(null);return}
+ if(has(n,DRINK_W)){await say(L(NOTDRINK+" Pour le moment, je peux vous apporter de l’eau plate ou de l’eau pétillante.","The cocktail and drinks menus are not yet available on the website. For now, I can bring you still or sparkling water."));return}
+ await say(L("Je vous propose de l’eau plate ou de l’eau pétillante : laquelle préférez-vous ?","I can offer still or sparkling water: which would you prefer?"))}
+async function serve(kind){phase="serving";drink=kind;ui();const t=myTable;
+ if(!kind)await say(L("Très bien, pas de boisson pour l’instant.","Very well, no drink for now."));
+ else{await say(kind=="still"?L("Une <b>eau plate</b> pour la table, je vous l’apporte tout de suite !","A <b>still water</b> for the table, coming right up!"):L("Une <b>eau pétillante</b> pour la table, je vous l’apporte tout de suite !","A <b>sparkling water</b> for the table, coming right up!"));
+  await walk(route({x:SV.x,z:SV.z},HOME)||[HOME]);SV.rg=180;await sleep(700);
+  const col=kind=="still"?"#bfe4ff":"#8fe0cf";SP.bottle.innerHTML="";cyl(SP.bottle,0,0,3.2,12,0,col,{n:8});SV.carry=true;SV.rg=0;await sleep(300);
+  await walk(approach(t,HOME)||[{x:t.x,z:t.z+80}]);face(t);await sleep(450);SV.carry=false;
+  const dr=grp(t.g,0,39,0);cyl(dr,0,0,3.6,14,0,col,{n:8});cyl(dr,-13,7,3,7,0,"#e8f4ff",{n:8});cyl(dr,13,7,3,7,0,"#e8f4ff",{n:8});
+  await say(L("Et voici votre eau. Vos plats arrivent bientôt, bon appétit !","Here is your water. Your dishes will be with you shortly, enjoy!"))}
+ phase="done";ui();setTimeout(finish,1000)}
+function finish(){const dn=drink?(drink=="still"?L("Eau plate","Still water"):L("Eau pétillante","Sparkling water")):L("Aucune","None");
+ $("fc").innerHTML=`<h2>${L("Simulation terminée","Simulation complete")}</h2><div>${L("Table","Table")} ${myTable.n} · ${covers} ${L("couvert(s)","guest(s)")}</div><ul>${order.map(o=>`<li>${o.q}× ${M[o.id].n} · ${eur(M[o.id].p*o.q)}</li>`).join("")}</ul><div><b>${L("Boisson","Drink")} :</b> ${dn}</div>${uAl.length?`<div><b>${L("Allergies signalées","Allergies flagged")} :</b> ${uAl.map(alN).join(", ")}</div>`:""}<div style="margin-top:6px"><b>Total : ${eur(total())}</b> <small>${L("(prix fictifs)","(fictional prices)")}</small></div>
+ <div class="b"><button class="btn" id="re">${L("Recommencer","Restart")}</button><a class="btn alt" href="https://www.sharmaji.fr" target="_blank" rel="noopener">${L("Réserver chez Sharmaji","Book at Sharmaji")} ${IC("ext")}</a><a class="btn alt" href="index.html">${L("Retour à la carte","Back to the menu")}</a><button class="btn alt" id="cl">${L("Fermer","Close")}</button></div>`;
+ $("fin").classList.add("on");$("re").onclick=restart;$("cl").onclick=()=>$("fin").classList.remove("on")}
+/* ================= INTERFACE ================= */
+async function handle(raw){raw=(raw||"").trim();if(!raw||busy)return;addMsg("me",esc(raw));$("in").value="";busy=true;ui();
+ try{const n=nm(raw);if(phase=="order")await orderLogic(n);else if(phase=="drink")await drinkLogic(n);else if(phase=="done")await say(L("La simulation est terminée. Touchez « Recommencer » pour reprendre.","The simulation is over. Tap “Restart” to start again."));else await say(L("Un instant, je m’occupe de vous.","One moment, I’m taking care of you."))}
+ catch(e){console.error(e);await say(L("Pardon, je n’ai pas compris. Pouvez-vous reformuler ?","Sorry, I didn’t catch that. Could you rephrase?"))}finally{busy=false;ui()}}
+function qrs(){const q=[],mk=(t,s)=>q.push([t,s]);
+ if(phase=="order"){if(pend)mk(L("Oui","Yes"),L("oui","yes")),mk(L("Non","No"),L("non","no"));
+  if(!covers)[1,2,3,4].forEach(c=>mk(c+" "+L(c>1?"personnes":"personne",c>1?"people":"person"),c+" "+L("personnes","people")));
+  if(!order.length){mk(L("Que me conseillez-vous ?","What do you recommend?"),L("Que me conseillez-vous ?","What do you recommend?"));mk(L("Plats végétariens ?","Vegetarian dishes?"),L("Quels plats sont végétariens ?","Which dishes are vegetarian?"));mk(L("Allergique aux fruits à coque","Allergic to nuts"),L("Je suis allergique aux fruits à coque","I am allergic to nuts"))}
+  else mk(L("Valider ma commande","Confirm my order"),L("c’est tout","that’s all"))}
+ else if(phase=="drink"){mk(L("Eau plate","Still water"),L("eau plate","still water"));mk(L("Eau pétillante","Sparkling water"),L("eau pétillante","sparkling water"));mk(L("Et les cocktails ?","What about cocktails?"),L("Avez-vous des cocktails ?","Do you have cocktails?"))}
+ return q}
+function ui(){const qr=$("qr");qr.innerHTML="";
+ if(!busy){qrs().forEach(([t,s])=>{const b=document.createElement("button");b.className="chip";b.textContent=t;b.onclick=()=>handle(s);qr.appendChild(b)});if(phase=="done"){const b=document.createElement("button");b.className="chip";b.textContent=L("Recommencer","Restart");b.onclick=restart;qr.appendChild(b)}}
+ const off=busy||["seating","kitchen","serving"].includes(phase);$("in").disabled=off;$("sd").disabled=off;
+ $("in").placeholder=phase=="drink"?L("Eau plate ou pétillante ?","Still or sparkling water?"):L("Ex. : 2 Dum Biryani et un Palak Paneer","e.g. 2 Dum Biryani and a Palak Paneer");
+ $("bt").innerHTML=IC("receipt")+"<span>"+L("Commande","Order")+" ("+count()+") · "+eur(total())+"</span>";$("bm").innerHTML=IC("list")+"<span>"+L("Carte","Menu")+"</span>";
+ $("bm").classList.toggle("on",drawer=="m");$("bt").classList.toggle("on",drawer=="t");drawerHtml()}
+function drawerHtml(){const d=$("dc"),lock=phase!="order"||busy;d.classList.toggle("on",!!drawer);if(!drawer){d.innerHTML="";return}
+ if(drawer=="m")d.innerHTML=M.map((m,i)=>`<div class="ln"><span>${m.n}${risky(i)?" "+IC("warn"):""}<br><small>${eur(m.p)} · ${m.r}</small></span><button data-a="add" data-i="${i}" ${lock?"disabled":""} aria-label="+">+</button></div>`).join("")+`<small>${L("Prix fictifs (simulation).","Fictional prices (simulation).")}</small>`;
+ else d.innerHTML=(order.map((o,j)=>`<div class="ln"><span>${o.q}× ${M[o.id].n}<br><small>${eur(M[o.id].p*o.q)}</small></span><button data-a="dec" data-j="${j}" ${lock?"disabled":""}>−</button><button data-a="inc" data-j="${j}" ${lock?"disabled":""}>+</button></div>`).join("")||`<small>${L("Votre commande est vide.","Your order is empty.")}</small>`)+`<div class="tot"><span>Total</span><span>${eur(total())}</span></div>`}
+$("dc").addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.disabled)return;const d=b.dataset;
+ if(d.a=="add")handle((ST.lang=="fr"?"Je prends un ":"I'll have a ")+M[+d.i].n);
+ if(d.a=="inc"){order[+d.j].q++;ui()}if(d.a=="dec"){const o=order[+d.j];if(--o.q<=0)order.splice(+d.j,1);ui()}});
+$("bm").onclick=()=>{drawer=drawer=="m"?null:"m";ui()};$("bt").onclick=()=>{drawer=drawer=="t"?null:"t";ui()};
+$("fm").onsubmit=e=>{e.preventDefault();handle($("in").value)};
+$("c1").onclick=()=>setGoal(PRE.bar);$("c2").onclick=()=>setGoal(PRE.room);$("c3").onclick=()=>myTable&&setGoal(tabCam());
+$("vo").onclick=()=>{ST.voice=!ST.voice;if(!ST.voice)stopVoice();saveV();vsUI()};
+$("rs").onclick=()=>restart();
+$("bfr").onclick=()=>{ST.lang="fr";stopVoice();lang();vsUI()};$("ben").onclick=()=>{ST.lang="en";stopVoice();lang();vsUI()};
+function lang(){document.documentElement.lang=ST.lang;$("bfr").setAttribute("aria-pressed",ST.lang=="fr");$("ben").setAttribute("aria-pressed",ST.lang=="en");
+ $("bk").innerHTML=IC("left")+"<span>"+L("La carte","The menu")+"</span>";$("role").textContent=L("Serveur virtuel · simulation","Virtual server · simulation");$("vso").title=L("Réglages de la voix","Voice settings");$("c1").innerHTML=IC("cloche")+"<span>"+L("Comptoir","Counter")+"</span>";$("c2").innerHTML=IC("room")+"<span>"+L("Salle","Dining room")+"</span>";$("c3").innerHTML=IC("seat")+"<span>"+L("Ma table","My table")+"</span>";
+ $("cs").textContent=L("Mode serveur (caisse)","Staff mode (POS)");$("hn").textContent=L("Glissez pour tourner · molette ou pincement pour zoomer · double-clic pour recentrer","Drag to rotate · wheel or pinch to zoom · double-click to recenter");ui()}
+function restart(){stopVoice();location.reload()}
+/* ================= DÉMARRAGE ================= */
+let unlocked=false,welcome="";
+function unlock(){if(unlocked)return;unlocked=true;if(serverUrl()){audioGraph();if(CV.ctx&&CV.ctx.state=="suspended")CV.ctx.resume()}if(TTS&&ST.voice&&welcome&&!busy&&log.querySelectorAll(".m.me").length==0){speak(welcome)}}
+addEventListener("pointerdown",unlock,{once:true,capture:true});addEventListener("keydown",unlock,{once:true,capture:true});
+buildRoom();buildActors();applyCam();requestAnimationFrame(loop);lang();
+(async()=>{busy=true;ui();SV.mode="wave";await sleep(400);
+ welcome=L("Namaste et bienvenue chez Sharmaji ! Je suis Raj, votre serveur virtuel. Combien de personnes êtes-vous ?","Namaste and welcome to Sharmaji! I’m Raj, your virtual server. How many people are you?");
+ await say(L("Namaste et bienvenue chez Sharmaji ! Je suis Raj, votre serveur virtuel. <b>Combien de personnes êtes-vous ?</b> Dites-moi ensuite ce qui vous ferait plaisir, par exemple « 2 Dum Biryani et un Palak Paneer ». Une allergie ? Dites-le-moi aussi.","Namaste and welcome to Sharmaji! I’m Raj, your virtual server. <b>How many people are you?</b> Then tell me what you’d like, for instance “2 Dum Biryani and a Palak Paneer”. Any allergy? Let me know too."));
+ busy=false;ui();setTimeout(()=>{if(SV.mode=="wave")SV.mode="idle"},1500)})();
 </script>
+<script>/* clavier mobile : hauteur occupée par le clavier dans --kb */
+(function(){var v=window.visualViewport;if(!v)return;function f(){document.documentElement.style.setProperty('--kb',Math.max(0,Math.round(innerHeight-v.height-v.offsetTop))+'px')}v.addEventListener('resize',f);v.addEventListener('scroll',f);f()})();</script>
 </body>
 </html>
