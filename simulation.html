@@ -3,7 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sharmaji · Simulation client</title>
+<title>Simulation : commandez avec Raj · Sharmaji</title>
+<meta name="description" content="Entrez virtuellement chez Sharmaji et commandez avec Raj, notre serveur virtuel : choix des plats, allergies, addition. Une démo interactive en 3D.">
+<link rel="canonical" href="https://bio-craquer.github.io/sharmaji/simulation.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sharmaji">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:title" content="Simulation : commandez avec Raj · Sharmaji">
+<meta property="og:description" content="Entrez virtuellement chez Sharmaji et commandez avec Raj, notre serveur virtuel : choix des plats, allergies, addition. Une démo interactive en 3D.">
+<meta property="og:url" content="https://bio-craquer.github.io/sharmaji/simulation.html">
+<meta name="twitter:card" content="summary">
+
 <meta name="theme-color" content="#13081a">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -192,7 +204,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
  <div id="qr"></div>
  <div id="bar"><button id="bm"></button><button id="bt"></button></div>
  <div id="dc"></div>
- <form id="fm"><input id="in" autocomplete="off"><button id="sd" type="submit" aria-label="Envoyer"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+ <form id="fm"><input id="in" autocomplete="off" enterkeyhint="send" aria-label="Votre message à Raj"><button id="sd" type="submit" aria-label="Envoyer"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
 </aside>
 <div id="kt"></div>
 <div id="fin"><div class="c" id="fc"></div></div>
@@ -221,7 +233,7 @@ const TB=PLAN.map(a=>({n:a[0],x:a[1]*8,z:a[2]*6,c:!!a[3],occ:a[4]||null,cap:a[3]
 /* ================= ÉTAT / LANGUE ================= */
 /* Voix réaliste : collez ici l’adresse de votre relais (voir voix-worker.js), ou dans le panneau « Voix » */
 const VOICE_SERVER="";
-const ST={lang:"fr",voice:true,rate:1,pitch:1,vname:{fr:"",en:""},vurl:""};try{Object.assign(ST,JSON.parse(localStorage.getItem("sj-voice")||"{}"))}catch(e){}
+const ST={lang:"fr",voice:true,rate:1,pitch:1,vname:{fr:"",en:""},vurl:""};try{Object.assign(ST,JSON.parse(localStorage.getItem("sj-voice")||"{}"))}catch(e){}try{const q=new URLSearchParams(location.search).get("lang");if(q=="fr"||q=="en")localStorage.setItem("sj-lang",q)}catch(e){}ST.lang=(()=>{try{const v=localStorage.getItem("sj-lang");return v=="en"?"en":"fr"}catch(e){return"fr"}})();const saveLang=l=>{try{localStorage.setItem("sj-lang",l)}catch(e){}};
 const saveV=()=>{try{localStorage.setItem("sj-voice",JSON.stringify({voice:ST.voice,rate:ST.rate,pitch:ST.pitch,vname:ST.vname,vurl:ST.vurl}))}catch(e){}};
 const $=i=>document.getElementById(i),L=(a,b)=>ST.lang=="fr"?a:b,LI=()=>ST.lang=="fr"?0:1,eur=n=>n.toFixed(2).replace(".",",")+" €";
 const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
@@ -532,7 +544,7 @@ $("fm").onsubmit=e=>{e.preventDefault();handle($("in").value)};
 $("c1").onclick=()=>setGoal(PRE.bar);$("c2").onclick=()=>setGoal(PRE.room);$("c3").onclick=()=>myTable&&setGoal(tabCam());
 $("vo").onclick=()=>{ST.voice=!ST.voice;if(!ST.voice)stopVoice();saveV();vsUI()};
 $("rs").onclick=()=>restart();
-$("bfr").onclick=()=>{ST.lang="fr";stopVoice();lang();vsUI()};$("ben").onclick=()=>{ST.lang="en";stopVoice();lang();vsUI()};
+$("bfr").onclick=()=>{ST.lang="fr";saveLang("fr");stopVoice();lang();vsUI()};$("ben").onclick=()=>{ST.lang="en";saveLang("en");stopVoice();lang();vsUI()};
 function lang(){document.documentElement.lang=ST.lang;$("bfr").setAttribute("aria-pressed",ST.lang=="fr");$("ben").setAttribute("aria-pressed",ST.lang=="en");
  $("bk").innerHTML=IC("left")+"<span>"+L("La carte","The menu")+"</span>";$("role").textContent=L("Serveur virtuel · simulation","Virtual server · simulation");$("vso").title=L("Réglages de la voix","Voice settings");$("c1").innerHTML=IC("cloche")+"<span>"+L("Comptoir","Counter")+"</span>";$("c2").innerHTML=IC("room")+"<span>"+L("Salle","Dining room")+"</span>";$("c3").innerHTML=IC("seat")+"<span>"+L("Ma table","My table")+"</span>";
  $("cs").textContent=L("Mode serveur (caisse)","Staff mode (POS)");$("hn").textContent=L("Glissez pour tourner · molette ou pincement pour zoomer · double-clic pour recentrer","Drag to rotate · wheel or pinch to zoom · double-click to recenter");ui()}

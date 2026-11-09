@@ -3,7 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sharmaji · Plat en détail</title>
+<title>Plat en détail · Sharmaji, cuisine indienne Paris 15e</title>
+<meta name="description" content="Découvrez chaque plat de Sharmaji en photo, en vue éclatée et en 3D : ingrédients, région d’origine et allergènes.">
+<link rel="canonical" href="https://bio-craquer.github.io/sharmaji/plat.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sharmaji">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:title" content="Plat en détail · Sharmaji">
+<meta property="og:description" content="Découvrez chaque plat de Sharmaji en photo, en vue éclatée et en 3D : ingrédients, région d’origine et allergènes.">
+<meta property="og:url" content="https://bio-craquer.github.io/sharmaji/plat.html">
+<meta name="twitter:card" content="summary">
+
 <meta name="theme-color" content="#13081a">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -147,12 +159,12 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 </div>
 <div class="note" id="nt"></div>
 <div class="ctl" id="c3" style="display:none"><button class="btn g on" id="ar"></button><button class="btn g" id="v1"></button><button class="btn g" id="v2"></button><button class="btn g" id="v3"></button></div>
-<div class="ctl" id="ct"><button class="btn" id="pb"></button><input type="range" id="sl" min="0" max="1000" value="0" aria-label="Explode"></div>
+<div class="ctl" id="ct"><button class="btn" id="pb"></button><input type="range" id="sl" min="0" max="1000" value="0" aria-label="Éclater / assembler le plat"></div>
 <script>
 const TOUCHDEV=matchMedia("(pointer:coarse)").matches;
 const IC=n=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS_[n]||""}</svg>`,ICONS_={"cal": "<rect x=\"3.5\" y=\"5\" width=\"17\" height=\"15\" rx=\"2\"/><path d=\"M3.5 10h17M8 3v4M16 3v4\"/>", "cloche": "<path d=\"M4 17h16M6 17a6 6 0 0 1 12 0M12 9V7.5M10.5 7.5h3M3 20h18\"/>", "chat": "<path d=\"M20 12a7.5 7.5 0 0 1-11.2 6.5L4 20l1.5-4.3A7.5 7.5 0 1 1 20 12Z\"/>", "help": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M9.6 9.4a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.1-2.4 3.7M12 17h.01\"/>", "x": "<path d=\"M6 6l12 12M18 6 6 18\"/>", "reset": "<path d=\"M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4\"/>", "right": "<path d=\"M5 12h14M13 6l6 6-6 6\"/>", "left": "<path d=\"M19 12H5M11 6l-6 6 6 6\"/>", "ext": "<path d=\"M14 5h5v5M19 5l-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4\"/>", "vol": "<path d=\"M4 10v4h3.5L12 18V6L7.5 10H4Z\"/><path d=\"M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11\"/>", "mute": "<path d=\"M4 10v4h3.5L12 18V6L7.5 10H4Z\"/><path d=\"M16 9.5l5 5M21 9.5l-5 5\"/>", "sliders": "<path d=\"M5 7h9M18 7h1M5 17h3M12 17h7\"/><circle cx=\"16\" cy=\"7\" r=\"2\"/><circle cx=\"10\" cy=\"17\" r=\"2\"/>", "plate": "<circle cx=\"12\" cy=\"12\" r=\"7.5\"/><circle cx=\"12\" cy=\"12\" r=\"3.5\"/>", "target": "<circle cx=\"12\" cy=\"12\" r=\"8\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/><circle cx=\"12\" cy=\"12\" r=\".8\"/>", "gear": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8\"/>", "moon": "<path d=\"M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5Z\"/>", "phone": "<path d=\"M5 4h3.5l1.5 4-2 1.3a10 10 0 0 0 6.7 6.7L16 14l4 1.5V19a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z\"/>", "room": "<rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"1.5\"/><path d=\"M4 12h16M12 4v16\"/>", "seat": "<path d=\"M7 4v9h10M7 13v7M17 13v7M7 9h10\"/>", "list": "<path d=\"M5 7h14M5 12h14M5 17h9\"/>", "receipt": "<path d=\"M6 3h12v18l-3-2-3 2-3-2-3 2V3Z\"/><path d=\"M9 8h6M9 12h6\"/>", "warn": "<path d=\"M12 4 21 20H3L12 4Z\"/><path d=\"M12 10v4M12 17h.01\"/>", "check": "<path d=\"M5 12.5l4.5 4.5L19 7\"/>", "play": "<path d=\"M8 5.5v13l10.5-6.5L8 5.5Z\"/>", "rotate": "<path d=\"M20 12a8 8 0 1 1-2.3-5.6M20 4v4.5h-4.5\"/>", "cube": "<path d=\"M12 3 20 7.5v9L12 21 4 16.5v-9L12 3Z\"/><path d=\"M4 7.5 12 12l8-4.5M12 12v9\"/>"};
 
-const $=i=>document.getElementById(i);let L="fr";const tr=(a,b)=>L=="fr"?a:b;
+const $=i=>document.getElementById(i);try{const q=new URLSearchParams(location.search).get("lang");if(q=="fr"||q=="en")localStorage.setItem("sj-lang",q)}catch(e){}const saveLang=l=>{try{localStorage.setItem("sj-lang",l)}catch(e){}};let L=(()=>{try{const v=localStorage.getItem("sj-lang");return v=="en"?"en":"fr"}catch(e){return"fr"}})();const tr=(a,b)=>L=="fr"?a:b;
 const R=(s=>()=>(s=s*16807%2147483647)/2147483647)(7);
 const pt=(rx,ry)=>{const a=R()*6.283,r=Math.sqrt(R());return[200+Math.cos(a)*r*rx,130+Math.sin(a)*r*ry]};
 const svg=(i)=>`<svg viewBox="0 0 400 260">${i}</svg>`;
@@ -206,7 +218,7 @@ function mkEls(){LY.forEach(l=>{const e=document.createElement("div");e.classNam
 function load(i){cur=i;const d=DS[i];sc.innerHTML="";$("xa").innerHTML="";document.querySelectorAll(".xl").forEach(e=>e.remove());
  LY=d.LY||(d.LY=d.L.map((s,j)=>({k:"k"+j,f:s[1].split("|"),d:s[2].split("|"),s:svg(BL[s[0][0]](...s[0].slice(1)))})));mkEls();
  $("pk").querySelectorAll("button").forEach((b,j)=>b.classList.toggle("on",j==i));$("tp").style.display=d.photo?"":"none";tx();
- try{history.replaceState(null,"","?d="+encodeURIComponent(d.n))}catch(e){}document.title="Sharmaji · "+d.n;
+ try{history.replaceState(null,"","?d="+encodeURIComponent(d.n))}catch(e){}
  const act=$("pk").children[i];if(act&&act.scrollIntoView)act.scrollIntoView({inline:"center",block:"nearest"});
  if(mode==2)tab(2);else if(d.photo&&mode==0)showPhoto();else tab(1)}
 DS.forEach((d,i)=>{const b=document.createElement("button");b.textContent=d.n;b.onclick=()=>load(i);$("pk").appendChild(b)});
@@ -238,7 +250,7 @@ function draw(){const n=LY.length-1,gap=W*Math.min(.22,1/n),ty=p*gap*n*.3;
  $("sl").value=p*1000;$("pb").textContent=p>.5?tr("Assembler","Reassemble"):tr("Éclater","Explode")}
 function go(to,ms){cancelAnimationFrame(anim);const a=p,t0=performance.now();(function f(t){const k=cl((t-t0)/ms),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;p=a+(to-a)*e;draw();if(k<1)anim=requestAnimationFrame(f)})(t0)}
 /* ui */
-function tx(){$("bk").textContent=tr("La carte","The menu");const d=DS[cur];$("ttl").innerHTML=`${d.n}<small>${d.r}</small>`;$("tp").textContent=tr("Photo","Photo");$("tx").textContent=tr("Vue éclatée","Exploded view");$("t3").textContent="3D";
+function tx(){$("bk").textContent=tr("La carte","The menu");const d=DS[cur];document.documentElement.lang=L;document.title=`${d.n} · ${tr("Sharmaji, cuisine indienne Paris 15e","Sharmaji, Indian cuisine Paris")}`;$("ttl").innerHTML=`${d.n}<small>${d.r}</small>`;$("tp").textContent=tr("Photo","Photo");$("tx").textContent=tr("Vue éclatée","Exploded view");$("t3").textContent="3D";
  $("tg").innerHTML=(d.v?`<span class="v">${d.v==2?tr("Végétarien · végane possible","Vegetarian · vegan option"):tr("Végétarien","Vegetarian")}</span>`:"")+d.al.map(x=>`<span class="a">${AN[x][L=="fr"?0:1]}</span>`).join("")+(d.i||[]).map(x=>`<span class="i">${AN[x][L=="fr"?0:1]}?</span>`).join("");
  $("hn").textContent=tr("Glissez pour tourner et incliner · molette pour zoomer · survolez un nom pour isoler la couche","Drag to rotate and tilt · wheel to zoom · hover a name to isolate its layer");
  $("nt").textContent=cur?tr("Illustration dessinée d’après la description de la carte, en attendant la photo du plat.","Illustration drawn from the menu description, until the dish photo is added."):tr("Photo détourée. Les éléments non visibles (lentilles, masala, crackers) sont dessinés d’après la description du plat.","Cut-out photo. Elements not visible (lentils, masala, crackers) are drawn from the dish description.");
@@ -247,7 +259,7 @@ function tab(m){mode=m;[$("tp"),$("tx"),$("t3")].forEach((b,k)=>b.classList.togg
  if(m==1){size();cancelAnimationFrame(anim);p=0;draw();setTimeout(()=>{if(mode==1)go(1,2800)},450)}else if(m==2){size3();build3()}else showPhoto()}
 $("tp").onclick=()=>tab(0);$("tx").onclick=()=>tab(1);$("t3").onclick=()=>tab(2);
 $("pb").onclick=()=>go(p>.5?0:1,2200);$("sl").oninput=e=>{cancelAnimationFrame(anim);p=e.target.value/1000;draw()};
-$("bfr").onclick=()=>{L="fr";tx();if(mode==2)lg()};$("ben").onclick=()=>{L="en";tx();if(mode==2)lg()};
+$("bfr").onclick=()=>{L="fr";saveLang(L);tx();if(mode==2)lg()};$("ben").onclick=()=>{L="en";saveLang(L);tx();if(mode==2)lg()};
 /* ---- true 3D: stacked slices ---- */
 const C3={rx:58,rz:-30,zm:1,auto:1,vz:0,idle:0,tg:null};
 function size3(){const r=$("dv").getBoundingClientRect(),w=Math.max(200,Math.min(r.width*(r.width<600?.8:.55),560,r.height*.74));const e=$("s3");e.style.width=w+"px";e.style.height=w*.65+"px";e.style.marginLeft=-w/2+"px";e.style.marginTop=-w*.325+"px";W3=w}
