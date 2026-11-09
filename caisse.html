@@ -13,7 +13,7 @@
 <meta property="og:locale:alternate" content="en_GB">
 <meta property="og:title" content="Sharmaji · Simulateur de caisse">
 <meta property="og:description" content="Simulateur de caisse et plan de salle de Sharmaji (démo).">
-<meta property="og:url" content="https://bio-craquer.github.io/sharmaji/caisse.html">
+<meta property="og:url" content="https://kayliloficial.github.io/sharmaji/caisse.html">
 <meta name="twitter:card" content="summary">
 
 <meta name="theme-color" content="#13081a">
@@ -160,7 +160,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 <script>
 const IC=n=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS_[n]||""}</svg>`,ICONS_={"cal": "<rect x=\"3.5\" y=\"5\" width=\"17\" height=\"15\" rx=\"2\"/><path d=\"M3.5 10h17M8 3v4M16 3v4\"/>", "cloche": "<path d=\"M4 17h16M6 17a6 6 0 0 1 12 0M12 9V7.5M10.5 7.5h3M3 20h18\"/>", "chat": "<path d=\"M20 12a7.5 7.5 0 0 1-11.2 6.5L4 20l1.5-4.3A7.5 7.5 0 1 1 20 12Z\"/>", "help": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M9.6 9.4a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.1-2.4 3.7M12 17h.01\"/>", "x": "<path d=\"M6 6l12 12M18 6 6 18\"/>", "reset": "<path d=\"M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4\"/>", "right": "<path d=\"M5 12h14M13 6l6 6-6 6\"/>", "left": "<path d=\"M19 12H5M11 6l-6 6 6 6\"/>", "ext": "<path d=\"M14 5h5v5M19 5l-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4\"/>", "vol": "<path d=\"M4 10v4h3.5L12 18V6L7.5 10H4Z\"/><path d=\"M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11\"/>", "mute": "<path d=\"M4 10v4h3.5L12 18V6L7.5 10H4Z\"/><path d=\"M16 9.5l5 5M21 9.5l-5 5\"/>", "sliders": "<path d=\"M5 7h9M18 7h1M5 17h3M12 17h7\"/><circle cx=\"16\" cy=\"7\" r=\"2\"/><circle cx=\"10\" cy=\"17\" r=\"2\"/>", "plate": "<circle cx=\"12\" cy=\"12\" r=\"7.5\"/><circle cx=\"12\" cy=\"12\" r=\"3.5\"/>", "target": "<circle cx=\"12\" cy=\"12\" r=\"8\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/><circle cx=\"12\" cy=\"12\" r=\".8\"/>", "gear": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8\"/>", "moon": "<path d=\"M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5Z\"/>", "phone": "<path d=\"M5 4h3.5l1.5 4-2 1.3a10 10 0 0 0 6.7 6.7L16 14l4 1.5V19a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z\"/>", "room": "<rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"1.5\"/><path d=\"M4 12h16M12 4v16\"/>", "seat": "<path d=\"M7 4v9h10M7 13v7M17 13v7M7 9h10\"/>", "list": "<path d=\"M5 7h14M5 12h14M5 17h9\"/>", "receipt": "<path d=\"M6 3h12v18l-3-2-3 2-3-2-3 2V3Z\"/><path d=\"M9 8h6M9 12h6\"/>", "warn": "<path d=\"M12 4 21 20H3L12 4Z\"/><path d=\"M12 10v4M12 17h.01\"/>", "check": "<path d=\"M5 12.5l4.5 4.5L19 7\"/>", "play": "<path d=\"M8 5.5v13l10.5-6.5L8 5.5Z\"/>", "rotate": "<path d=\"M20 12a8 8 0 1 1-2.3-5.6M20 4v4.5h-4.5\"/>", "cube": "<path d=\"M12 3 20 7.5v9L12 21 4 16.5v-9L12 3Z\"/><path d=\"M4 7.5 12 12l8-4.5M12 12v9\"/>"};
 
-const BOOK="https://www.sharmaji.fr",TEL="+33978805278";
+const BOOK="https://widget.thefork.com/fr/b6990545-bf47-46d3-a676-89393a33777d?step=date",TEL="+33978805278";
 const ST={music:true,vol:.5,sfx:true,vfx:!matchMedia("(prefers-reduced-motion:reduce)").matches,dark:false,hints:true,lang:"fr",speed:20};
 try{Object.assign(ST,JSON.parse(localStorage.getItem("sjpos")||"{}"))}catch(e){}
 const $=i=>document.getElementById(i),tr=(a,b)=>ST.lang=="fr"?a:b,li=()=>ST.lang=="fr"?0:1,now=()=>Date.now();

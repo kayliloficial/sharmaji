@@ -9,17 +9,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>Carte de Sharmaji · Cuisine indienne à Paris 15e</title>
-<meta name="description" content="La carte interactive de Sharmaji, restaurant indien rue Frémicourt (Paris 15e) : entrées et plats régionaux, filtres végétarien et allergènes, glossaire et assistant.">
-<link rel="canonical" href="https://bio-craquer.github.io/sharmaji/">
+<meta name="description" content="La carte de Sharmaji, le restaurant indien du chef Manoj Sharma à Paris 15e : plats régionaux, options végétariennes, allergènes, horaires et réservation.">
+<link rel="canonical" href="https://kayliloficial.github.io/sharmaji/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sharmaji">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:locale:alternate" content="en_GB">
 <meta property="og:title" content="Carte de Sharmaji · Cuisine indienne à Paris 15e">
-<meta property="og:description" content="La carte interactive de Sharmaji, restaurant indien rue Frémicourt (Paris 15e) : entrées et plats régionaux, filtres végétarien et allergènes, glossaire et assistant.">
-<meta property="og:url" content="https://bio-craquer.github.io/sharmaji/">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="La carte de Sharmaji, le restaurant indien du chef Manoj Sharma à Paris 15e : plats régionaux, options végétariennes, allergènes, horaires et réservation.">
+<meta property="og:url" content="https://kayliloficial.github.io/sharmaji/">
+<meta property="og:image" content="https://kayliloficial.github.io/sharmaji/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sharmaji, cuisine indienne du chef Manoj Sharma à Paris 15e">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -31,7 +35,7 @@
   "Indienne",
   "Indian"
  ],
- "description": "Restaurant de cuisine indienne régionale à Paris 15e : Hyderabad, Kerala, Goa, Lucknow, Delhi.",
+ "description": "Le restaurant indien du chef Manoj Sharma à Paris 15e : recettes de famille et cuisines régionales (Hyderabad, Kerala, Goa, Lucknow, Delhi).",
  "address": {
   "@type": "PostalAddress",
   "streetAddress": "16 rue Frémicourt",
@@ -39,11 +43,11 @@
   "addressLocality": "Paris",
   "addressCountry": "FR"
  },
- "acceptsReservations": "https://www.sharmaji.fr",
+ "acceptsReservations": "https://widget.thefork.com/fr/b6990545-bf47-46d3-a676-89393a33777d?step=date",
  "hasMenu": {
   "@type": "Menu",
-  "name": "Carte Sharmaji",
-  "url": "https://bio-craquer.github.io/sharmaji/",
+  "name": "Avant-première de la nouvelle carte Sharmaji", "description": "Plats à venir, présentés en avant-première. La carte servie actuellement est disponible sur https://www.sharmaji.fr/sharmaji_food.pdf",
+  "url": "https://kayliloficial.github.io/sharmaji/",
   "inLanguage": [
    "fr",
    "en"
@@ -129,7 +133,75 @@
     ]
    }
   ]
- }
+ },
+ "priceRange": "€€",
+ "hasMap": "https://www.google.com/maps/search/?api=1&query=Sharmaji+16+rue+Fr%C3%A9micourt+75015+Paris",
+ "sameAs": [
+  "https://www.instagram.com/sharmajiparis/",
+  "https://guide.michelin.com/fr/fr/ile-de-france/paris/restaurant/sharmaji",
+  "https://www.sharmaji.fr"
+ ],
+ "openingHoursSpecification": [
+  {
+   "@type": "OpeningHoursSpecification",
+   "dayOfWeek": [
+    "Tuesday",
+    "Wednesday"
+   ],
+   "opens": "12:00",
+   "closes": "14:15"
+  },
+  {
+   "@type": "OpeningHoursSpecification",
+   "dayOfWeek": [
+    "Tuesday",
+    "Wednesday"
+   ],
+   "opens": "18:30",
+   "closes": "22:30"
+  },
+  {
+   "@type": "OpeningHoursSpecification",
+   "dayOfWeek": [
+    "Thursday",
+    "Friday"
+   ],
+   "opens": "12:00",
+   "closes": "14:15"
+  },
+  {
+   "@type": "OpeningHoursSpecification",
+   "dayOfWeek": [
+    "Thursday",
+    "Friday",
+    "Saturday"
+   ],
+   "opens": "18:30",
+   "closes": "23:00"
+  },
+  {
+   "@type": "OpeningHoursSpecification",
+   "dayOfWeek": [
+    "Saturday",
+    "Sunday"
+   ],
+   "opens": "12:00",
+   "closes": "14:30"
+  }
+ ],
+ "amenityFeature": [
+  {
+   "@type": "LocationFeatureSpecification",
+   "name": "Terrasse",
+   "value": true
+  },
+  {
+   "@type": "LocationFeatureSpecification",
+   "name": "Accès fauteuil roulant",
+   "value": true
+  }
+ ],
+ "image": "https://kayliloficial.github.io/sharmaji/og-image.jpg"
 }
 </script>
 
@@ -283,8 +355,131 @@ header{padding-top:calc(72px + env(safe-area-inset-top))}
 }
 @media(max-width:420px){#hb span,#cbtn span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}#hb,#cbtn{width:54px;height:54px;padding:0;justify-content:center}#hb .ic,#cbtn .ic{width:22px;height:22px}}
 @media(max-width:600px) and (prefers-reduced-motion:no-preference){.dish{animation-duration:.45s}}
+
+/* ===== nouvelles sections ===== */
+.badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0 0;font-size:13.5px}
+.badge{display:inline-flex;align-items:center;gap:7px;padding:5px 13px;border-radius:99px;border:1px solid rgba(233,180,90,.35);background:rgba(20,8,27,.4);color:#e9dccd;text-decoration:none;backdrop-filter:blur(6px)}
+a.badge:hover{border-color:#e9b45a;color:#f7dc9c}
+.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--bad);box-shadow:0 0 0 3px rgba(228,106,106,.18)}
+.badge.open .dot{background:var(--ok);box-shadow:0 0 0 3px rgba(143,211,168,.2);animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(143,211,168,0)}}
+.nav{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;margin:22px 0 0;font-size:14px;letter-spacing:.04em}
+.nav a{color:#e9dccd;text-decoration:none;border-bottom:1px solid transparent;padding:4px 0}.nav a:hover{color:#f2c27a;border-color:rgba(233,180,90,.5)}
+.sec{max-width:1060px;margin:0 auto;padding:10px 18px 30px;scroll-margin-top:20px}
+.kick{text-align:center;color:#f2c27a;letter-spacing:.18em;text-transform:uppercase;font-size:12.5px;margin:0}
+.sec h2.ttl{margin:6px 0 26px;text-align:center;font:600 clamp(36px,5.5vw,52px)/1.05 Cormorant,serif;background:var(--foil);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.story{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:stretch}
+.panel{position:relative;border-radius:22px;padding:28px 28px 24px;background:linear-gradient(180deg,rgba(66,28,78,.5),rgba(30,13,38,.82));border:1px solid var(--line2);box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 18px 40px rgba(0,0,0,.3)}
+.panel::before{content:"";position:absolute;top:0;left:26px;right:26px;height:1px;background:var(--foil);opacity:.8}
+.panel p{margin:0 0 14px;color:rgba(246,234,219,.85);font-size:16.5px}
+.panel .lead{font:italic 500 23px/1.35 Cormorant,serif;color:#fbf1e3}
+.panel h3{margin:0 0 10px;font:600 28px/1.1 Cormorant,serif;color:#fbf1e3}
+.regs{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.regs .chip{font-size:13.5px}
+.exp{display:flex;flex-direction:column;justify-content:center;text-align:center;background:radial-gradient(ellipse 80% 70% at 50% 0%,rgba(242,169,59,.16),transparent 70%),linear-gradient(180deg,rgba(66,28,78,.55),rgba(30,13,38,.85))}
+.exp .num{font:700 64px/1 Cormorant,serif;background:var(--foil);-webkit-background-clip:text;background-clip:text;color:transparent;margin:6px 0 2px}
+.exp small{color:var(--mut)}
+.links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px}
+.lnk{display:inline-flex;align-items:center;gap:8px;color:#f2c27a;font:600 14px Hind,system-ui,sans-serif;text-decoration:none;border-bottom:1px solid rgba(233,180,90,.35);padding-bottom:2px}.lnk:hover{color:#ffe2a6;border-color:#e9b45a}
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+table.hrs{width:100%;border-collapse:collapse;font-size:15.5px}
+.hrs td{padding:7px 0;border-bottom:1px solid var(--line2)}.hrs td:last-child{text-align:right;color:rgba(246,234,219,.85)}
+.hrs tr.today td{color:#f7dc9c;font-weight:600}.hrs tr.today td:first-child::after{content:" ●";color:#e9b45a;font-size:11px;vertical-align:2px}
+.hrs .cl{color:var(--mut)!important}
+.panel .fine{color:var(--mut);font-size:13.5px;margin:14px 0 0}
+.hrs td:last-child{white-space:nowrap;line-height:1.5}
+.ul{list-style:none;margin:0;padding:0}.ul li{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line2);color:rgba(246,234,219,.88)}.ul li:last-child{border:0}
+.ul .ic{color:#e9b45a;margin-top:4px}
+.ul a{color:#f6eadb;text-decoration:none;border-bottom:1px solid rgba(233,180,90,.35)}.ul a:hover{color:#f2c27a}
+.faq{max-width:780px;margin:0 auto}
+.faq details{border-bottom:1px solid var(--line2)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center;padding:18px 4px;font:600 22px/1.25 Cormorant,serif;color:#fbf1e3}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);color:#f2c27a;font:400 20px Hind,sans-serif;transition:transform .25s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq summary:hover{color:#f7dc9c}
+.faq details p{margin:0 4px 18px;color:rgba(246,234,219,.82)}
+.faq a{color:#f2c27a}
+.final{text-align:center;margin:40px auto 0;max-width:820px;padding:44px 24px;border-radius:26px;border:1px solid var(--line);background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(242,169,59,.18),transparent 70%),linear-gradient(170deg,#3a1646,#1e0d27)}
+.final h2{margin:0 0 8px;font:600 clamp(34px,5vw,48px)/1.05 Cormorant,serif;color:#fbf1e3}
+.final p{margin:0 0 22px;color:#e9dccd}
+.menunote{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;align-items:center;margin:30px auto 0;padding:14px 18px;max-width:700px;border:1px dashed rgba(233,180,90,.35);border-radius:14px;color:var(--mut);font-size:14.5px;text-align:center}
+@media(max-width:800px){.story{grid-template-columns:1fr}}
+@media(max-width:600px){.sec{padding:6px 14px 24px}.panel{padding:24px 20px 20px}.faq summary{font-size:20px}.final{margin:30px 14px 0;padding:34px 18px}}
 </style>
 
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Comment réserver une table ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "En ligne sur TheFork, à toute heure, ou par téléphone au 09 78 80 52 78."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Quels sont les horaires ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Du mardi au samedi, midi et soir ; le dimanche, le midi seulement. Fermé le lundi. Le détail est dans « Infos pratiques »."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Y a-t-il des plats végétariens ou véganes ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Oui. Touchez « Végétarien » en haut de la carte pour les voir ; certains peuvent aussi être préparés véganes, c’est indiqué sur le plat."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "J’ai une allergie : comment faire ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Utilisez « Je ne mange pas » pour griser les plats concernés, puis prévenez toujours votre serveur avant de commander : la cuisine confirme chaque allergène."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Est-ce que c’est très épicé ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Le niveau de piment n’est pas indiqué sur la carte. Dites simplement à votre serveur si vous préférez moins de piment."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Qu’est-ce que « l’expérience incontournable » ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Un menu en cinq services, composé par le chef et servi à toute la table. Demandez-le à votre serveur."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Peut-on privatiser le restaurant ou offrir un repas ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Oui : faites une demande de privatisation ou offrez un bon cadeau."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Comment venir ? Le lieu est-il accessible ?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Au 16 rue Frémicourt (Paris 15e), métro La Motte-Picquet – Grenelle. Le restaurant a une terrasse et est accessible en fauteuil roulant (Guide MICHELIN)."
+   }
+  }
+ ]
+}
+</script>
 </head>
 
 <body>
@@ -295,11 +490,13 @@ header{padding-top:calc(72px + env(safe-area-inset-top))}
 <div class="nm">नमस्ते</div>
 <h1>Sharmaji</h1>
 <p class="sub" id="sub"></p>
+<div class="badges" id="badges"></div>
 <div class="orn" aria-hidden="true"><i></i><b></b><i></i></div>
-<div class="cta"><a class="btn2 pri" id="bk" href="https://www.sharmaji.fr" target="_blank" rel="noopener"></a><a class="btn2" id="sim" href="simulation.html"></a></div>
+<div class="cta"><a class="btn2 pri" id="bk" href="https://widget.thefork.com/fr/b6990545-bf47-46d3-a676-89393a33777d?step=date" target="_blank" rel="noopener"></a><a class="btn2" id="sim" href="simulation.html"></a></div>
+<nav class="nav" id="nav" aria-label="Sections"></nav>
 </header>
 
-<main id="main">
+<main id="carte">
 
 <div class="fb"><div class="chips" id="f1"></div>
 
@@ -308,12 +505,18 @@ header{padding-top:calc(72px + env(safe-area-inset-top))}
 <div class="chips" id="f3"></div></div>
 <p class="count" id="cnt"></p>
 
-<div id="out"></div>
+<div id="out" tabindex="-1"></div>
 
 <p class="note" id="note"></p>
+<p class="menunote" id="mnote"></p>
 
 </main>
-<footer class="ft"><div class="orn" aria-hidden="true"><i></i><b></b><i></i></div><p><b>Sharmaji</b></p><p>16 rue Frémicourt · 75015 Paris · <a href="tel:+33978805278">09 78 80 52 78</a></p><p><a id="fb1" href="https://www.sharmaji.fr" target="_blank" rel="noopener"></a> &nbsp;·&nbsp; <a id="fb2" href="simulation.html"></a> &nbsp;·&nbsp; <a id="fb3" href="caisse.html"></a></p></footer>
+<section class="sec" id="chef"></section>
+<section class="sec" id="infos"></section>
+<section class="sec" id="faq"></section>
+<section class="sec" id="go"></section>
+
+<footer class="ft"><div class="orn" aria-hidden="true"><i></i><b></b><i></i></div><p><b>Sharmaji</b></p><p>16 rue Frémicourt · 75015 Paris · <a href="tel:+33978805278">09 78 80 52 78</a></p><p><a id="fb1" href="https://widget.thefork.com/fr/b6990545-bf47-46d3-a676-89393a33777d?step=date" target="_blank" rel="noopener"></a> &nbsp;·&nbsp; <a id="fb2" href="simulation.html"></a> &nbsp;·&nbsp; <a id="fb3" href="caisse.html"></a></p></footer>
 
 <button id="hb"></button>
 
@@ -324,7 +527,7 @@ header{padding-top:calc(72px + env(safe-area-inset-top))}
 <div id="hp"><div class="pan" role="dialog" aria-modal="true" aria-label="Aide"><button class="x" id="hx" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button><div id="hc"></div></div></div>
 
 <script>
-const IC=n=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS_[n]||""}</svg>`,ICONS_={"cal": "<rect x=\"3.5\" y=\"5\" width=\"17\" height=\"15\" rx=\"2\"/><path d=\"M3.5 10h17M8 3v4M16 3v4\"/>", "cloche": "<path d=\"M4 17h16M6 17a6 6 0 0 1 12 0M12 9V7.5M10.5 7.5h3M3 20h18\"/>", "chat": "<path d=\"M20 12a7.5 7.5 0 0 1-11.2 6.5L4 20l1.5-4.3A7.5 7.5 0 1 1 20 12Z\"/>", "help": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M9.6 9.4a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.1-2.4 3.7M12 17h.01\"/>", "x": "<path d=\"M6 6l12 12M18 6 6 18\"/>", "reset": "<path d=\"M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4\"/>", "right": "<path d=\"M5 12h14M13 6l6 6-6 6\"/>", "left": "<path d=\"M19 12H5M11 6l-6 6 6 6\"/>", "ext": "<path d=\"M14 5h5v5M19 5l-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4\"/>", "vol": "<path d=\"M4 10v4h3.5L12 18V6L7.5 10H4Z\"/><path d=\"M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11\"/>", "mute": "<path d=\"M4 10v4h3.5L12 18V6L7.5 10H4Z\"/><path d=\"M16 9.5l5 5M21 9.5l-5 5\"/>", "sliders": "<path d=\"M5 7h9M18 7h1M5 17h3M12 17h7\"/><circle cx=\"16\" cy=\"7\" r=\"2\"/><circle cx=\"10\" cy=\"17\" r=\"2\"/>", "plate": "<circle cx=\"12\" cy=\"12\" r=\"7.5\"/><circle cx=\"12\" cy=\"12\" r=\"3.5\"/>", "target": "<circle cx=\"12\" cy=\"12\" r=\"8\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/><circle cx=\"12\" cy=\"12\" r=\".8\"/>", "gear": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8\"/>", "moon": "<path d=\"M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5Z\"/>", "phone": "<path d=\"M5 4h3.5l1.5 4-2 1.3a10 10 0 0 0 6.7 6.7L16 14l4 1.5V19a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z\"/>", "room": "<rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"1.5\"/><path d=\"M4 12h16M12 4v16\"/>", "seat": "<path d=\"M7 4v9h10M7 13v7M17 13v7M7 9h10\"/>", "list": "<path d=\"M5 7h14M5 12h14M5 17h9\"/>", "receipt": "<path d=\"M6 3h12v18l-3-2-3 2-3-2-3 2V3Z\"/><path d=\"M9 8h6M9 12h6\"/>", "warn": "<path d=\"M12 4 21 20H3L12 4Z\"/><path d=\"M12 10v4M12 17h.01\"/>", "check": "<path d=\"M5 12.5l4.5 4.5L19 7\"/>", "play": "<path d=\"M8 5.5v13l10.5-6.5L8 5.5Z\"/>", "rotate": "<path d=\"M20 12a8 8 0 1 1-2.3-5.6M20 4v4.5h-4.5\"/>", "cube": "<path d=\"M12 3 20 7.5v9L12 21 4 16.5v-9L12 3Z\"/><path d=\"M4 7.5 12 12l8-4.5M12 12v9\"/>"};
+const IC=n=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS_[n]||""}</svg>`,ICONS_={"pin": "<path d=\"M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z\"/><circle cx=\"12\" cy=\"10\" r=\"2.3\"/>","metro": "<rect x=\"5\" y=\"3.5\" width=\"14\" height=\"14\" rx=\"3\"/><path d=\"M5 11h14M9 21l1.5-3.5M15 21l-1.5-3.5\"/><circle cx=\"9\" cy=\"14.2\" r=\".6\"/><circle cx=\"15\" cy=\"14.2\" r=\".6\"/>","sun": "<circle cx=\"12\" cy=\"12\" r=\"3.8\"/><path d=\"M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6\"/>","gift": "<rect x=\"3.5\" y=\"8.5\" width=\"17\" height=\"4\" rx=\"1\"/><path d=\"M5 12.5v8h14v-8M12 8.5v12M12 8.5S10.5 4 8 4.5 7.5 8.5 12 8.5zM12 8.5S13.5 4 16 4.5s.5 4-4 4z\"/>","users": "<circle cx=\"9\" cy=\"8\" r=\"3.2\"/><path d=\"M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6\"/><circle cx=\"17\" cy=\"9\" r=\"2.5\"/><path d=\"M16.5 14.2c2.6.2 4.5 2.6 4.5 5.8\"/>","insta": "<rect x=\"3.5\" y=\"3.5\" width=\"17\" height=\"17\" rx=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/><circle cx=\"17.2\" cy=\"6.8\" r=\".7\"/>","cal": "<rect x=\"3.5\" y=\"5\" width=\"17\" height=\"15\" rx=\"2\"/><path d=\"M3.5 10h17M8 3v4M16 3v4\"/>", "cloche": "<path d=\"M4 17h16M6 17a6 6 0 0 1 12 0M12 9V7.5M10.5 7.5h3M3 20h18\"/>", "chat": "<path d=\"M20 12a7.5 7.5 0 0 1-11.2 6.5L4 20l1.5-4.3A7.5 7.5 0 1 1 20 12Z\"/>", "help": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M9.6 9.4a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.1-2.4 3.7M12 17h.01\"/>", "x": "<path d=\"M6 6l12 12M18 6 6 18\"/>", "reset": "<path d=\"M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v4h4\"/>", "right": "<path d=\"M5 12h14M13 6l6 6-6 6\"/>", "left": "<path d=\"M19 12H5M11 6l-6 6 6 6\"/>", "ext": "<path d=\"M14 5h5v5M19 5l-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4\"/>", "vol": "<path d=\"M4 10v4h3.5L12 18V6L7.5 10H4Z\"/><path d=\"M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11\"/>", "mute": "<path d=\"M4 10v4h3.5L12 18V6L7.5 10H4Z\"/><path d=\"M16 9.5l5 5M21 9.5l-5 5\"/>", "sliders": "<path d=\"M5 7h9M18 7h1M5 17h3M12 17h7\"/><circle cx=\"16\" cy=\"7\" r=\"2\"/><circle cx=\"10\" cy=\"17\" r=\"2\"/>", "plate": "<circle cx=\"12\" cy=\"12\" r=\"7.5\"/><circle cx=\"12\" cy=\"12\" r=\"3.5\"/>", "target": "<circle cx=\"12\" cy=\"12\" r=\"8\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/><circle cx=\"12\" cy=\"12\" r=\".8\"/>", "gear": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8\"/>", "moon": "<path d=\"M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5Z\"/>", "phone": "<path d=\"M5 4h3.5l1.5 4-2 1.3a10 10 0 0 0 6.7 6.7L16 14l4 1.5V19a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z\"/>", "room": "<rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"1.5\"/><path d=\"M4 12h16M12 4v16\"/>", "seat": "<path d=\"M7 4v9h10M7 13v7M17 13v7M7 9h10\"/>", "list": "<path d=\"M5 7h14M5 12h14M5 17h9\"/>", "receipt": "<path d=\"M6 3h12v18l-3-2-3 2-3-2-3 2V3Z\"/><path d=\"M9 8h6M9 12h6\"/>", "warn": "<path d=\"M12 4 21 20H3L12 4Z\"/><path d=\"M12 10v4M12 17h.01\"/>", "check": "<path d=\"M5 12.5l4.5 4.5L19 7\"/>", "play": "<path d=\"M8 5.5v13l10.5-6.5L8 5.5Z\"/>", "rotate": "<path d=\"M20 12a8 8 0 1 1-2.3-5.6M20 4v4.5h-4.5\"/>", "cube": "<path d=\"M12 3 20 7.5v9L12 21 4 16.5v-9L12 3Z\"/><path d=\"M4 7.5 12 12l8-4.5M12 12v9\"/>"};
 
 
 const D=[
@@ -431,7 +634,7 @@ $("sub").textContent=t(TX.sub);document.documentElement.lang=L;$("skip").textCon
 
 $("bfr").setAttribute("aria-pressed",L=="fr");$("ben").setAttribute("aria-pressed",L=="en");
 
-help()}
+sections();help()}
 
 function help(){
 
@@ -619,6 +822,55 @@ $("cc").onclick=closeChat;
 $("cr").onclick=()=>{H=[];CTX=null;chatUI()};
 
 document.addEventListener("keydown",e=>{if(e.key=="Escape")closeChat()});
+
+
+/* ===== sections : chef, infos, FAQ, réservation ===== */
+const FORK="https://widget.thefork.com/fr/b6990545-bf47-46d3-a676-89393a33777d?step=date",TEL="+33978805278",TELH="09 78 80 52 78",PDF_FOOD="https://www.sharmaji.fr/sharmaji_food.pdf",PDF_BAR="https://www.sharmaji.fr/sharmaji_bar.pdf",GIFT="https://sharmaji.shop.bonkdo.com/fr/bons-cadeaux",PRIV="https://prvt.re/ZOLMln",INSTA="https://www.instagram.com/sharmajiparis/",MAPS="https://www.google.com/maps/search/?api=1&query=Sharmaji+16+rue+Fr%C3%A9micourt+75015+Paris",MICH="https://guide.michelin.com/fr/fr/ile-de-france/paris/restaurant/sharmaji";
+const FQ=[["Comment réserver une table ?", "How do I book a table?", "En ligne sur <a href=\"https://widget.thefork.com/fr/b6990545-bf47-46d3-a676-89393a33777d?step=date\" target=\"_blank\" rel=\"noopener\">TheFork</a>, à toute heure, ou par téléphone au <a href=\"tel:+33978805278\">09 78 80 52 78</a>.", "Online on <a href=\"https://widget.thefork.com/fr/b6990545-bf47-46d3-a676-89393a33777d?step=date\" target=\"_blank\" rel=\"noopener\">TheFork</a>, any time, or by phone on <a href=\"tel:+33978805278\">09 78 80 52 78</a>."], ["Quels sont les horaires ?", "What are the opening hours?", "Du mardi au samedi, midi et soir ; le dimanche, le midi seulement. Fermé le lundi. Le détail est dans « Infos pratiques ».", "Tuesday to Saturday, lunch and dinner; Sunday, lunch only. Closed on Mondays. Full details under “Practical info”."], ["Y a-t-il des plats végétariens ou véganes ?", "Are there vegetarian or vegan dishes?", "Oui. Touchez « Végétarien » en haut de la carte pour les voir ; certains peuvent aussi être préparés véganes, c’est indiqué sur le plat.", "Yes. Tap “Vegetarian” at the top of the menu to see them; some can also be made vegan, as shown on the dish."], ["J’ai une allergie : comment faire ?", "I have an allergy: what should I do?", "Utilisez « Je ne mange pas » pour griser les plats concernés, puis prévenez toujours votre serveur avant de commander : la cuisine confirme chaque allergène.", "Use “I avoid” to grey out the dishes concerned, then always tell your server before ordering: the kitchen confirms every allergen."], ["Est-ce que c’est très épicé ?", "Is it very spicy?", "Le niveau de piment n’est pas indiqué sur la carte. Dites simplement à votre serveur si vous préférez moins de piment.", "The heat level is not listed on the menu. Just tell your server if you prefer less heat."], ["Qu’est-ce que « l’expérience incontournable » ?", "What is “the essential experience”?", "Un menu en cinq services, composé par le chef et servi à toute la table. Demandez-le à votre serveur.", "A five-course menu composed by the chef and served to the whole table. Just ask your server."], ["Peut-on privatiser le restaurant ou offrir un repas ?", "Can I book the restaurant privately or give a meal as a gift?", "Oui : faites une <a href=\"https://prvt.re/ZOLMln\" target=\"_blank\" rel=\"noopener\">demande de privatisation</a> ou offrez un <a href=\"https://sharmaji.shop.bonkdo.com/fr/bons-cadeaux\" target=\"_blank\" rel=\"noopener\">bon cadeau</a>.", "Yes: send a <a href=\"https://prvt.re/ZOLMln\" target=\"_blank\" rel=\"noopener\">private booking request</a> or give a <a href=\"https://sharmaji.shop.bonkdo.com/fr/bons-cadeaux\" target=\"_blank\" rel=\"noopener\">gift voucher</a>."], ["Comment venir ? Le lieu est-il accessible ?", "How do I get there? Is it accessible?", "Au 16 rue Frémicourt (Paris 15e), métro La Motte-Picquet – Grenelle. Le restaurant a une terrasse et est accessible en fauteuil roulant (<a href=\"https://guide.michelin.com/fr/fr/ile-de-france/paris/restaurant/sharmaji\" target=\"_blank\" rel=\"noopener\">Guide MICHELIN</a>).", "At 16 rue Frémicourt (Paris 15th), metro La Motte-Picquet – Grenelle. The restaurant has a terrace and wheelchair access (<a href=\"https://guide.michelin.com/fr/fr/ile-de-france/paris/restaurant/sharmaji\" target=\"_blank\" rel=\"noopener\">MICHELIN Guide</a>)."]];
+/* horaires (0 = dimanche) — source : fiches publiques du restaurant, à confirmer par téléphone */
+const HR={0:[[720,870]],1:[],2:[[720,855],[1110,1350]],3:[[720,855],[1110,1350]],4:[[720,855],[1110,1380]],5:[[720,855],[1110,1380]],6:[[720,870],[1110,1380]]};
+const DAYS=[["Dimanche","Sunday"],["Lundi","Monday"],["Mardi","Tuesday"],["Mercredi","Wednesday"],["Jeudi","Thursday"],["Vendredi","Friday"],["Samedi","Saturday"]];
+const hm=m=>{const h=Math.floor(m/60),n=m%60;return L=="fr"?`${h}h${n?String(n).padStart(2,"0"):""}`:`${h}:${String(n).padStart(2,"0")}`};
+function paris(){const p=new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Paris",weekday:"short",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date()),g=k=>p.find(x=>x.type==k).value;
+ return{d:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(g("weekday")),m:+g("hour")*60+ +g("minute")}}
+function status(){const{d,m}=paris(),f=L=="fr";const cur=HR[d].find(([a,b])=>m>=a&&m<b);
+ if(cur)return{open:1,txt:(f?"Ouvert · jusqu’à ":"Open · until ")+hm(cur[1])};
+ const later=HR[d].find(([a])=>a>m);if(later)return{open:0,txt:(f?"Fermé · ouvre à ":"Closed · opens at ")+hm(later[0])};
+ for(let i=1;i<=7;i++){const dd=(d+i)%7;if(HR[dd].length)return{open:0,txt:(f?"Fermé · ouvre ":"Closed · opens ")+(i==1?(f?"demain":"tomorrow"):(f?DAYS[dd][0].toLowerCase():DAYS[dd][1]))+(f?" à ":" at ")+hm(HR[dd][0][0])}}}
+const ico=n=>IC(n)||"";
+function regions(){const set=[];D.forEach(d=>d.r.split(/,|&|–|\(|\)/).map(x=>x.trim()).filter(Boolean).forEach(r=>{if(!set.includes(r))set.push(r)}));return set}
+function showRegion(r){S={c:"all",g:"any",ex:S.ex};render();const els=D.map((d,i)=>d.r.includes(r)?$("d-"+i):null).filter(Boolean);
+ if(!els.length)return;els[0].scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth",block:"center"});els.forEach(e=>{e.classList.add("flash");setTimeout(()=>e.classList.remove("flash"),2600)})}
+function sections(){const f=L=="fr",st=status();
+ $("badges").innerHTML=`<span class="badge${st.open?" open":""}" id="stt"><span class="dot"></span>${st.txt}</span><a class="badge" href="${MICH}" target="_blank" rel="noopener">${f?"Sélection Guide MICHELIN":"MICHELIN Guide selection"}</a><span class="badge">Time Out · 4/5 · ${f?"Recommandé":"Recommended"}</span>`;
+ $("nav").innerHTML=[["carte",f?"La carte":"Menu"],["chef",f?"Le chef":"The chef"],["infos",f?"Infos pratiques":"Practical info"],["faq","FAQ"]].map(([id,t])=>`<a href="#${id}">${t}</a>`).join("");
+ $("mnote").innerHTML=(f?"Avant-première : ces plats arrivent bientôt à la carte. La carte servie aujourd’hui est ici : ":"Preview: these dishes are coming soon. Today’s menu is here: ")+`<a class="lnk" href="${PDF_FOOD}" target="_blank" rel="noopener">${f?"carte actuelle (PDF)":"current menu (PDF)"}</a>`;
+ $("chef").innerHTML=`<p class="kick">${f?"Chez Monsieur Sharma":"At Mr Sharma’s"}</p><h2 class="ttl">${f?"La cuisine de famille du chef":"The chef’s family cooking"}</h2>
+ <div class="story"><div class="panel"><p class="lead">${f?"« Sharmaji », c’est « Monsieur Sharma » en hindi.":"“Sharmaji” means “Mr Sharma” in Hindi."}</p>
+ <p>${f?"Après Jugaad, le chef Manoj Sharma a ouvert cette table du 15e pour cuisiner les recettes de sa famille et des saveurs indiennes presque oubliées, loin des clichés tandoori-korma.":"After Jugaad, chef Manoj Sharma opened this table in the 15th to cook his family’s recipes and nearly forgotten Indian flavours, far from tandoori-and-korma clichés."}</p>
+ <p>${f?"Une carte courte qui change souvent, où chaque plat vient d’une région. Choisissez la vôtre :":"A short, often-changing menu where every dish comes from a region. Pick yours:"}</p>
+ <div class="regs" id="regs"></div></div>
+ <div class="panel exp"><p class="kick">${f?"Pour toute la table":"For the whole table"}</p><h3>${f?"L’expérience incontournable":"The essential experience"}</h3><div class="num">5</div><small>${f?"services composés par le chef":"courses composed by the chef"}</small>
+ <p style="margin-top:16px">${f?"Laissez le chef composer le repas : le plus simple pour découvrir Sharmaji à plusieurs.":"Let the chef compose the meal: the easiest way to discover Sharmaji as a group."}</p>
+ <div class="links"><a class="lnk" href="${PDF_FOOD}" target="_blank" rel="noopener">${f?"Carte complète":"Full menu"} (PDF)</a><a class="lnk" href="${PDF_BAR}" target="_blank" rel="noopener">${f?"Carte du bar":"Bar menu"} (PDF)</a></div></div></div>`;
+ regions().forEach(r=>$("regs").appendChild(chip(r,false,"",()=>showRegion(r))));
+ const {d}=paris();
+ const rows=[2,3,4,5,6,0,1].map(i=>`<tr${i==d?' class="today"':""}><td>${DAYS[i][f?0:1]}</td><td${HR[i].length?"":' class="cl"'}>${HR[i].length?HR[i].map(([a,b])=>hm(a)+" – "+hm(b)).join("<br>"):(f?"Fermé":"Closed")}</td></tr>`).join("");
+ $("infos").innerHTML=`<p class="kick">${f?"Avant de venir":"Before you come"}</p><h2 class="ttl">${f?"Infos pratiques":"Practical info"}</h2><div class="info">
+ <div class="panel"><h3>${f?"Horaires":"Opening hours"}</h3><table class="hrs"><tbody>${rows}</tbody></table><p class="fine">${f?"Horaires indicatifs : un doute, un jour férié ? Appelez-nous.":"Hours may vary on bank holidays: give us a call."}</p></div>
+ <div class="panel"><h3>${f?"Venir":"Getting here"}</h3><ul class="ul">
+ <li>${ico("pin")}<span><a href="${MAPS}" target="_blank" rel="noopener">16 rue Frémicourt, 75015 Paris</a></span></li>
+ <li>${ico("metro")}<span>${f?"Métro":"Metro"} La Motte-Picquet – Grenelle</span></li>
+ <li>${ico("phone")}<span><a href="tel:${TEL}">${TELH}</a></span></li>
+ <li>${ico("sun")}<span>${f?"Terrasse · accès fauteuil roulant · cartes bancaires":"Terrace · wheelchair access · cards accepted"}</span></li></ul></div>
+ <div class="panel"><h3>${f?"Et aussi":"Also"}</h3><ul class="ul">
+ <li>${ico("gift")}<span><a href="${GIFT}" target="_blank" rel="noopener">${f?"Offrir un bon cadeau":"Give a gift voucher"}</a></span></li>
+ <li>${ico("users")}<span><a href="${PRIV}" target="_blank" rel="noopener">${f?"Privatiser le restaurant":"Book the restaurant privately"}</a></span></li>
+ <li>${ico("insta")}<span><a href="${INSTA}" target="_blank" rel="noopener">Instagram @sharmajiparis</a></span></li>
+ <li>${ico("cal")}<span><a href="${FORK}" target="_blank" rel="noopener">${f?"Réserver sur TheFork":"Book on TheFork"}</a></span></li></ul></div></div>`;
+ $("faq").innerHTML=`<p class="kick">${f?"Vos questions":"Your questions"}</p><h2 class="ttl">${f?"Questions fréquentes":"Frequently asked"}</h2><div class="faq">${FQ.map(q=>`<details><summary>${q[f?0:1]}</summary><p>${q[f?2:3]}</p></details>`).join("")}</div>`;
+ $("go").innerHTML=`<div class="final"><h2>${f?"Une table vous attend":"A table is waiting for you"}</h2><p>${f?"Réservez en ligne en une minute, ou appelez-nous.":"Book online in a minute, or give us a call."}</p><div class="cta" style="margin:0"><a class="btn2 pri" href="${FORK}" target="_blank" rel="noopener">${ico("cal")}<span>${f?"Réserver une table":"Book a table"}</span></a><a class="btn2" href="tel:${TEL}">${ico("phone")}<span>${TELH}</span></a></div></div>`}
+setInterval(()=>{const st=status(),b=$("stt");if(b){b.className="badge"+(st.open?" open":"");b.innerHTML='<span class="dot"></span>'+st.txt}},60000);
 
 render();
 

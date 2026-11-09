@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Simulation : commandez avec Raj · Sharmaji</title>
 <meta name="description" content="Entrez virtuellement chez Sharmaji et commandez avec Raj, notre serveur virtuel : choix des plats, allergies, addition. Une démo interactive en 3D.">
-<link rel="canonical" href="https://bio-craquer.github.io/sharmaji/simulation.html">
+<link rel="canonical" href="https://kayliloficial.github.io/sharmaji/simulation.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sharmaji">
@@ -13,7 +13,7 @@
 <meta property="og:locale:alternate" content="en_GB">
 <meta property="og:title" content="Simulation : commandez avec Raj · Sharmaji">
 <meta property="og:description" content="Entrez virtuellement chez Sharmaji et commandez avec Raj, notre serveur virtuel : choix des plats, allergies, addition. Une démo interactive en 3D.">
-<meta property="og:url" content="https://bio-craquer.github.io/sharmaji/simulation.html">
+<meta property="og:url" content="https://kayliloficial.github.io/sharmaji/simulation.html">
 <meta name="twitter:card" content="summary">
 
 <meta name="theme-color" content="#13081a">
@@ -435,7 +435,7 @@ async function orderLogic(n){
   if(no){pend=null;await say(L("D’accord, je ne l’ajoute pas. Voulez-vous un conseil sans risque ?","Alright, I won’t add it. Would you like a safe suggestion?"));return}pend=null}
  // 1. nombre de personnes
  const cv=detectCovers(n);
- if(cv!==null){if(cv>4){await say(L(`Pour ${cv} personnes, je vous conseille de <a href="https://www.sharmaji.fr" target="_blank" rel="noopener">réserver directement auprès du restaurant</a>. Dans cette simulation, une table accueille jusqu’à 4 personnes : combien serez-vous ?`,`For ${cv} guests, please <a href="https://www.sharmaji.fr" target="_blank" rel="noopener">book directly with the restaurant</a>. In this simulation a table seats up to 4: how many will you be?`));return}
+ if(cv!==null){if(cv>4){await say(L(`Pour ${cv} personnes, je vous conseille de <a href="https://widget.thefork.com/fr/b6990545-bf47-46d3-a676-89393a33777d?step=date" target="_blank" rel="noopener">réserver directement auprès du restaurant</a>. Dans cette simulation, une table accueille jusqu’à 4 personnes : combien serez-vous ?`,`For ${cv} guests, please <a href="https://widget.thefork.com/fr/b6990545-bf47-46d3-a676-89393a33777d?step=date" target="_blank" rel="noopener">book directly with the restaurant</a>. In this simulation a table seats up to 4: how many will you be?`));return}
   if(cv>=1){covers=cv;ui();if(wantConfirm){await confirmOrder();return}if(!found.length){await say(L(`Parfait, une table pour ${cv}. `,`Perfect, a table for ${cv}. `)+(order.length?askMore():L("Que souhaitez-vous commander ?","What would you like to order?")));return}}}
  // 2. allergies
  const al=detectAllergy(n);if(al.length){al.forEach(a=>{if(!uAl.includes(a))uAl.push(a)});
@@ -514,7 +514,7 @@ async function serve(kind){phase="serving";drink=kind;ui();const t=myTable;
  phase="done";ui();setTimeout(finish,1000)}
 function finish(){const dn=drink?(drink=="still"?L("Eau plate","Still water"):L("Eau pétillante","Sparkling water")):L("Aucune","None");
  $("fc").innerHTML=`<h2>${L("Simulation terminée","Simulation complete")}</h2><div>${L("Table","Table")} ${myTable.n} · ${covers} ${L("couvert(s)","guest(s)")}</div><ul>${order.map(o=>`<li>${o.q}× ${M[o.id].n} · ${eur(M[o.id].p*o.q)}</li>`).join("")}</ul><div><b>${L("Boisson","Drink")} :</b> ${dn}</div>${uAl.length?`<div><b>${L("Allergies signalées","Allergies flagged")} :</b> ${uAl.map(alN).join(", ")}</div>`:""}<div style="margin-top:6px"><b>Total : ${eur(total())}</b> <small>${L("(prix fictifs)","(fictional prices)")}</small></div>
- <div class="b"><button class="btn" id="re">${L("Recommencer","Restart")}</button><a class="btn alt" href="https://www.sharmaji.fr" target="_blank" rel="noopener">${L("Réserver chez Sharmaji","Book at Sharmaji")} ${IC("ext")}</a><a class="btn alt" href="index.html">${L("Retour à la carte","Back to the menu")}</a><button class="btn alt" id="cl">${L("Fermer","Close")}</button></div>`;
+ <div class="b"><button class="btn" id="re">${L("Recommencer","Restart")}</button><a class="btn alt" href="https://widget.thefork.com/fr/b6990545-bf47-46d3-a676-89393a33777d?step=date" target="_blank" rel="noopener">${L("Réserver chez Sharmaji","Book at Sharmaji")} ${IC("ext")}</a><a class="btn alt" href="index.html">${L("Retour à la carte","Back to the menu")}</a><button class="btn alt" id="cl">${L("Fermer","Close")}</button></div>`;
  $("fin").classList.add("on");$("re").onclick=restart;$("cl").onclick=()=>$("fin").classList.remove("on")}
 /* ================= INTERFACE ================= */
 async function handle(raw){raw=(raw||"").trim();if(!raw||busy)return;addMsg("me",esc(raw));$("in").value="";busy=true;ui();
